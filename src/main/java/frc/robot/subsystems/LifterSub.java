@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorStopCom;
 
@@ -33,6 +34,14 @@ public class LifterSub extends Subsystem {
     fLimitBottom = new DigitalInput(RobotMap.FRONT_LIMIT_BOTTOM_CH);
     rLimitTop = new DigitalInput(RobotMap.REAR_LIMIT_TOP_CH);
     rLimitBottom = new DigitalInput(RobotMap.REAR_LIMIT_BOTTOM_CH);
+
+    SmartDashboard.putData(frontLifter);
+    SmartDashboard.putData(rearLifter);
+    SmartDashboard.putData(lifterDrive);
+    SmartDashboard.putData(fLimitTop);
+    SmartDashboard.putData(fLimitBottom);
+    SmartDashboard.putData(rLimitTop);
+    SmartDashboard.putData(rLimitBottom);
   }
 
   public boolean getFrontTopLimit() {

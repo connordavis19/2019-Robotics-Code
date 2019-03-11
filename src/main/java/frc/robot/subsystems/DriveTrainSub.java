@@ -24,7 +24,7 @@ import frc.robot.commands.MecanumDriveCom;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class DriveTrainSub extends Subsystem {
-  
+
   private CANSparkMax frontLeft, frontRight, rearLeft, rearRight;
   private MecanumDrive mecDrive;
   private DifferentialDrive arcDrive;
@@ -37,7 +37,7 @@ public class DriveTrainSub extends Subsystem {
   private CANEncoder backRightEncoder;
   private CANEncoder dummyEncoder;
   private CANEncoder[] encoders = new CANEncoder[4];
-
+  private double deadband;
 
   public DriveTrainSub() {
     frontLeft = new CANSparkMax(RobotMap.FRONT_LEFT_CHANNEL, MotorType.kBrushless);
@@ -56,9 +56,9 @@ public class DriveTrainSub extends Subsystem {
     rightSide = new SpeedControllerGroup(frontRight, rearRight);
     arcDrive = new DifferentialDrive(leftSide, rightSide);
 
-    frontLeft.setOpenLoopRampRate(.5); 
-    frontRight.setOpenLoopRampRate(.5); 
-    rearLeft.setOpenLoopRampRate(.5); 
+    frontLeft.setOpenLoopRampRate(.5);
+    frontRight.setOpenLoopRampRate(.5);
+    rearLeft.setOpenLoopRampRate(.5);
     rearRight.setOpenLoopRampRate(.5);
 
     frontLeft.setIdleMode(IdleMode.kCoast);
@@ -66,7 +66,7 @@ public class DriveTrainSub extends Subsystem {
     rearLeft.setIdleMode(IdleMode.kCoast);
     rearRight.setIdleMode(IdleMode.kCoast);
 
-
+    deadband = RobotMap.DEADBAND_CH;
 
     driveSol = new DoubleSolenoid(RobotMap.DRIVE_SOL_FORWARD_CH, RobotMap.DRIVE_SOL_REVERSE_CH);
   }
@@ -80,13 +80,23 @@ public class DriveTrainSub extends Subsystem {
 
   
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
-    mecDrive.driveCartesian(ySpeed, xSpeed, zRotation);
+    mecDrive.driveCartesian(addDeadband(-ySpeed), addDeadband(xSpeed), addDeadband(zRotation));
     driveSol.set(DoubleSolenoid.Value.kForward);
   }
 
   public void arcadeDrive(double xSpeed, double zRotation) {
-    arcDrive.arcadeDrive(xSpeed, zRotation);
+    arcDrive.arcadeDrive(addDeadband(-xSpeed), addDeadband(zRotation));
     driveSol.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  // Adds deadband to a given axis (for driving only)
+  public double addDeadband(double x) {
+    if (x >= deadband)
+      return x;
+    else if (x <= -deadband)
+      return x;
+    else
+      return 0;
   }
 
   @Override

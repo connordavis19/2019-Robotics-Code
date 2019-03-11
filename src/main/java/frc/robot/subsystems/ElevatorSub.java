@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -31,8 +30,6 @@ public class ElevatorSub extends Subsystem {
     SmartDashboard.putData(elevatorTopLimit);
     elevatorBottomLimit = new DigitalInput(RobotMap.LOWER_ELEVATOR_LIMIT_CHANNEL);
     SmartDashboard.putData(elevatorBottomLimit);
-    
-    
   }
 
   public boolean getTopLimit() {

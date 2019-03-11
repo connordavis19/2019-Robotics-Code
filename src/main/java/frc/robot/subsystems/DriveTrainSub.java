@@ -1,0 +1,75 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot.subsystems;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import frc.robot.RobotMap;
+import frc.robot.commands.MecanumDriveCom;
+
+/**
+ * An example subsystem.  You can replace me with your own Subsystem.
+ */
+public class DriveTrainSub extends Subsystem {
+  
+  private CANSparkMax frontLeft, frontRight, rearLeft, rearRight;
+  private MecanumDrive mecDrive;
+  private DifferentialDrive arcDrive;
+  private SpeedControllerGroup leftSide;
+  private SpeedControllerGroup rightSide;
+  private DoubleSolenoid driveSol;
+
+  public DriveTrainSub() {
+    frontLeft = new CANSparkMax(RobotMap.FRONT_LEFT_CHANNEL, MotorType.kBrushless);
+    frontRight = new CANSparkMax(RobotMap.FRONT_RIGHT_CHANNEL, MotorType.kBrushless);
+    rearLeft = new CANSparkMax(RobotMap.REAR_LEFT_CHANNEL, MotorType.kBrushless);
+    rearRight = new CANSparkMax(RobotMap.REAR_RIGHT_CHANNEL, MotorType.kBrushless);
+
+    mecDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+
+    leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
+    rightSide = new SpeedControllerGroup(frontRight, rearRight);
+    arcDrive = new DifferentialDrive(leftSide, rightSide);
+
+    frontLeft.setOpenLoopRampRate(.5); 
+    frontRight.setOpenLoopRampRate(.5); 
+    rearLeft.setOpenLoopRampRate(.5); 
+    rearRight.setOpenLoopRampRate(.5);
+
+    frontLeft.setIdleMode(IdleMode.kCoast);
+    frontRight.setIdleMode(IdleMode.kCoast);
+    rearLeft.setIdleMode(IdleMode.kCoast);
+    rearRight.setIdleMode(IdleMode.kCoast);
+
+
+
+    driveSol = new DoubleSolenoid(RobotMap.DRIVE_SOL_FORWARD_CH, RobotMap.DRIVE_SOL_REVERSE_CH);
+  }
+
+  public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
+    mecDrive.driveCartesian(ySpeed, xSpeed, zRotation);
+    driveSol.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void arcadeDrive(double xSpeed, double zRotation) {
+    arcDrive.arcadeDrive(xSpeed, zRotation);
+    driveSol.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new MecanumDriveCom());
+  }
+}

@@ -22,7 +22,7 @@ public static int REAR_RIGHT_CHANNEL = 4;
 public static int REAR_LEFT_CHANNEL = 2;
 
 // Create constants for the elevator motor and limits
-public static int ELEVATOR_MOTOR_CHANNEL = 7;
+public static int ELEVATOR_MOTOR_CHANNEL = 11;
 public static int UPPER_ELEVATOR_LIMIT_CHANNEL= 1;
 public static int LOWER_ELEVATOR_LIMIT_CHANNEL= 0;
 

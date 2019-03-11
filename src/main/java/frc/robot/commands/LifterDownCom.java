@@ -30,7 +30,7 @@ public class LifterDownCom extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return false; // limit switch code in LifterSub (so they will stop independantly)
   }
 
   // Called once after isFinished returns true

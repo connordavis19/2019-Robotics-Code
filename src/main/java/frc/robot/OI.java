@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalGlitchFilter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ArcadeDriveCom;
@@ -22,20 +24,30 @@ public class OI {
   private Joystick driveStick;
   private JoystickButton shiftButton;
 
+  private Joystick elevatorStick;
   private JoystickButton elevatorUpButton;
   private JoystickButton elevatorDownButton;
+
   private double xSpeed;
   private double ySpeed;
   private double zRotation;
 
+  private DigitalInput leftEye;
+  private DigitalInput mideEye;
+  private DigitalInput rightEye;
+
   public OI() {
+
+    //Drive Joystick
     driveStick = new Joystick(RobotMap.DRIVE_STICK_CH);
     shiftButton = new JoystickButton(driveStick, RobotMap.SHIFT_BUTTON_CH);
     shiftButton.toggleWhenPressed(new ArcadeDriveCom());
 
-    elevatorUpButton = new JoystickButton(driveStick, 4);
+    //Elevator Joystick
+    elevatorStick = new Joystick(RobotMap.ELEVATOR_STICK_CH);
+    elevatorUpButton = new JoystickButton(elevatorStick, 4);
     elevatorUpButton.whileHeld(new ElevatorUpCom());
-    elevatorDownButton = new JoystickButton(driveStick, 2);
+    elevatorDownButton = new JoystickButton(elevatorStick, 2);
     elevatorDownButton.whileHeld(new ElevatorDownCom());
   }
 
@@ -51,5 +63,19 @@ public class OI {
     return driveStick.getRawAxis(4);
   }
 
+  public boolean getLeftEye()
+  {
+    return leftEye.get();
+  }
+
+  public boolean getMidEye()
+  {
+    return leftEye.get();
+  }
+
+  public boolean getRightEye()
+  {
+    return leftEye.get();
+  }
 
 }

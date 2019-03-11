@@ -43,8 +43,12 @@ public static int DRIVE_SOL_REVERSE_CH = 1;
 public static int DRIVE_STICK_CH = 0;
 public static int SHIFT_BUTTON_CH = 1;
 
+//Create the constants for the elevator joystick
+public static int ELEVATOR_STICK_CH = 1;
+
 //Create constant for deadband
 public static double DEADBAND_CH = 0.05;
+
 
 
 

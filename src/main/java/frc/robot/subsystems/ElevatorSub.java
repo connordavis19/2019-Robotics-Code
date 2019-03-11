@@ -41,11 +41,13 @@ public class ElevatorSub extends Subsystem {
   }
 
   public void elevatorUp() {
-    elevatorMotor.set(.2);
+    if (getTopLimit())
+      elevatorMotor.set(.2);
   }
 
   public void elevatorDown() {
-    elevatorMotor.set(-.2);
+    if (getBottomLimit())
+      elevatorMotor.set(-.2);
   }
 
   public void elevatorStop() {

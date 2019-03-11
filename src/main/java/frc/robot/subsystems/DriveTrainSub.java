@@ -30,6 +30,7 @@ public class DriveTrainSub extends Subsystem {
   private SpeedControllerGroup leftSide;
   private SpeedControllerGroup rightSide;
   private DoubleSolenoid driveSol;
+  private double deadband;
 
   public DriveTrainSub() {
     frontLeft = new CANSparkMax(RobotMap.FRONT_LEFT_CHANNEL, MotorType.kBrushless);
@@ -53,7 +54,7 @@ public class DriveTrainSub extends Subsystem {
     rearLeft.setIdleMode(IdleMode.kCoast);
     rearRight.setIdleMode(IdleMode.kCoast);
 
-
+    deadband = RobotMap.DEADBAND_CH;
 
     driveSol = new DoubleSolenoid(RobotMap.DRIVE_SOL_FORWARD_CH, RobotMap.DRIVE_SOL_REVERSE_CH);
   }
@@ -64,7 +65,7 @@ public class DriveTrainSub extends Subsystem {
   }
 
   public void arcadeDrive(double xSpeed, double zRotation) {
-    arcDrive.arcadeDrive(addDeadband(-xSpeed, addDeadbandzRotation));
+    arcDrive.arcadeDrive(addDeadband(-xSpeed), addDeadband(zRotation));
     driveSol.set(DoubleSolenoid.Value.kReverse);
   }
 

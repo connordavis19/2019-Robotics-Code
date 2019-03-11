@@ -42,11 +42,21 @@ public class ElevatorSub extends Subsystem {
   }
 
   public void elevatorUp() {
+<<<<<<< HEAD
     elevatorMotor.set( .5);
   }
 
   public void elevatorDown() {
     elevatorMotor.set(-.5);
+=======
+    if (getTopLimit())
+      elevatorMotor.set(.2);
+  }
+
+  public void elevatorDown() {
+    if (getBottomLimit())
+      elevatorMotor.set(-.2);
+>>>>>>> 45f9f0cafa94508632e30e5df2244d7e4d5fade9
   }
 
   public void elevatorStop() {

@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorStopCom;
 
@@ -28,11 +29,19 @@ public class LifterSub extends Subsystem {
     rearLifter = new WPI_VictorSPX(RobotMap.REAR_LIFTER_CH);
     lifterDrive = new WPI_VictorSPX(RobotMap.LIFTER_DRIVE_CH);
 
-    //set lifter limits (see RobotMap for IDs)
+    // set lifter limits (see RobotMap for IDs)
     fLimitTop = new DigitalInput(RobotMap.FRONT_LIMIT_TOP_CH);
     fLimitBottom = new DigitalInput(RobotMap.FRONT_LIMIT_BOTTOM_CH);
     rLimitTop = new DigitalInput(RobotMap.REAR_LIMIT_TOP_CH);
     rLimitBottom = new DigitalInput(RobotMap.REAR_LIMIT_BOTTOM_CH);
+
+    SmartDashboard.putData(frontLifter);
+    SmartDashboard.putData(rearLifter);
+    SmartDashboard.putData(lifterDrive);
+    SmartDashboard.putData(fLimitTop);
+    SmartDashboard.putData(fLimitBottom);
+    SmartDashboard.putData(rLimitTop);
+    SmartDashboard.putData(rLimitBottom);
   }
 
   public boolean getFrontTopLimit() {
@@ -52,34 +61,64 @@ public class LifterSub extends Subsystem {
   }
 
   public void liftUp() {
-    frontLifter.set(0.2);
-    rearLifter.set(0.2);
+    if (getFrontTopLimit())
+      frontLifter.set(0.2);
+    if (getRearTopLimit())
+      rearLifter.set(0.2);
   }
 
   public void liftDown() {
-    frontLifter.set(-0.2);
-    rearLifter.set(-0.2);
+    if (getFrontBottomLimit())
+      frontLifter.set(-0.2);
+    if (getRearBottomLimit())
+      rearLifter.set(-0.2);
   }
 
   public void frontLiftUp() {
-    frontLifter.set(0.2);
+    if (getFrontTopLimit())
+      frontLifter.set(0.2);
   }
 
   public void frontLiftDown() {
-    frontLifter.set(-0.2);
+    if (getFrontBottomLimit())
+      frontLifter.set(-0.2);
   }
 
   public void rearLiftUp() {
-    rearLifter.set(0.2);
+    if (getRearTopLimit())
+      rearLifter.set(0.2);
   }
 
   public void rearLiftDown() {
-    rearLifter.set(-0.2);
+    if (getRearBottomLimit())
+      rearLifter.set(-0.2);
+  }
+
+  public void lifterDrive(double xSpeed) {
+    lifterDrive.set(xSpeed);
+  }
+
+  public void frontLiftStop() {
+    frontLifter.set(0);
+  }
+
+  public void rearLiftStop() {
+    rearLifter.set(0);
+  }
+
+  public void stopLifters() {
+    frontLifter.set(0);
+    rearLifter.set(0);
+  }
+
+  public void stopLifterDrive() {
+    lifterDrive.set(0);
   }
 
   public void stopAll() {
     frontLifter.set(0);
     rearLifter.set(0);
+    lifterDrive.set(0);
   }
 
   // Put methods for controlling this subsystem

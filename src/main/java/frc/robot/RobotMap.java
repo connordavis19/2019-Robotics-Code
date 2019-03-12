@@ -52,6 +52,9 @@ public static double DEADBAND_CH = 0.05;
 //Create constant for herder potentiometer
 public static int HERDER_POT_CH = 0;
 
+//Create constant for herder motor
+public static int HERDER_MOTOR_CH = 0; // TODO: set ID
+
 
 
 

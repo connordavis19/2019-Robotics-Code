@@ -59,6 +59,10 @@ public class OI {
     return driveStick.getRawAxis(0);
   }
 
+  public double getSecondaryY() {
+    return elevatorStick.getRawAxis(0);
+  }
+
   public double getTwist() {
     return driveStick.getRawAxis(4);
   }

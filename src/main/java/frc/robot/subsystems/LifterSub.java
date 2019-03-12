@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorStopCom;
+import frc.robot.commands.StopAllLifterCom;
 
 /**
  * Add your docs here.
@@ -21,7 +22,7 @@ import frc.robot.commands.ElevatorStopCom;
 public class LifterSub extends Subsystem {
 
   private WPI_VictorSPX frontLifter, rearLifter, lifterDrive;
-  private DigitalInput fLimitTop, fLimitBottom, rLimitTop, rLimitBottom;
+  private DigitalInput frontLimitTop, frontLimitBottom, rearLimitTop, rearLimitBottom;
 
   public LifterSub() {
     // set lifter motors (see RobotMap for IDs)
@@ -30,36 +31,36 @@ public class LifterSub extends Subsystem {
     lifterDrive = new WPI_VictorSPX(RobotMap.LIFTER_DRIVE_CH);
 
     // set lifter limits (see RobotMap for IDs)
-    fLimitTop = new DigitalInput(RobotMap.FRONT_LIMIT_TOP_CH);
-    fLimitBottom = new DigitalInput(RobotMap.FRONT_LIMIT_BOTTOM_CH);
-    rLimitTop = new DigitalInput(RobotMap.REAR_LIMIT_TOP_CH);
-    rLimitBottom = new DigitalInput(RobotMap.REAR_LIMIT_BOTTOM_CH);
+    frontLimitTop = new DigitalInput(RobotMap.FRONT_LIMIT_TOP_CH);
+    frontLimitBottom = new DigitalInput(RobotMap.FRONT_LIMIT_BOTTOM_CH);
+    rearLimitTop = new DigitalInput(RobotMap.REAR_LIMIT_TOP_CH);
+    rearLimitBottom = new DigitalInput(RobotMap.REAR_LIMIT_BOTTOM_CH);
 
     SmartDashboard.putData(frontLifter);
     SmartDashboard.putData(rearLifter);
     SmartDashboard.putData(lifterDrive);
-    SmartDashboard.putData(fLimitTop);
-    SmartDashboard.putData(fLimitBottom);
-    SmartDashboard.putData(rLimitTop);
-    SmartDashboard.putData(rLimitBottom);
+    SmartDashboard.putData(frontLimitTop);
+    SmartDashboard.putData(frontLimitBottom);
+    SmartDashboard.putData(rearLimitTop);
+    SmartDashboard.putData(rearLimitBottom);
   }
-
+  
   public boolean getFrontTopLimit() {
-    return fLimitTop.get();
+    return frontLimitTop.get();
   }
 
   public boolean getFrontBottomLimit() {
-    return fLimitBottom.get();
+    return frontLimitBottom.get();
   }
-
+  
   public boolean getRearTopLimit() {
-    return rLimitTop.get();
+    return rearLimitTop.get();
   }
 
   public boolean getRearBottomLimit() {
-    return rLimitBottom.get();
+    return rearLimitBottom.get();
   }
-
+   
   public void liftUp() {
     if (getFrontTopLimit())
       frontLifter.set(0.2);
@@ -114,7 +115,7 @@ public class LifterSub extends Subsystem {
   public void stopLifterDrive() {
     lifterDrive.set(0);
   }
-
+  
   public void stopAll() {
     frontLifter.set(0);
     rearLifter.set(0);
@@ -127,6 +128,6 @@ public class LifterSub extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ElevatorStopCom());
+    setDefaultCommand(new StopAllLifterCom());
   }
 }

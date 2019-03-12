@@ -49,7 +49,8 @@ public static int ELEVATOR_STICK_CH = 1;
 //Create constant for deadband
 public static double DEADBAND_CH = 0.05;
 
-
+//Create constant for herder potentiometer
+public static int HERDER_POT_CH = 0;
 
 
 

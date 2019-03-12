@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.ElevatorStopCom;
-import frc.robot.commands.StopAllLifterCom;
+import frc.robot.commands.LifterStick;
 
 /**
  * Add your docs here.
@@ -63,36 +62,41 @@ public class LifterSub extends Subsystem {
    
   public void liftUp() {
     if (getFrontTopLimit())
-      frontLifter.set(0.2);
+      frontLifter.set(-0.2);
     if (getRearTopLimit())
-      rearLifter.set(0.2);
+      rearLifter.set(-0.2);
   }
 
   public void liftDown() {
     if (getFrontBottomLimit())
-      frontLifter.set(-0.2);
+      frontLifter.set(0.4);
     if (getRearBottomLimit())
-      rearLifter.set(-0.2);
+      rearLifter.set(0.4);
   }
 
   public void frontLiftUp() {
-    frontLifter.set(0.2);
-  }
-
-  public void frontLiftDown() {
     frontLifter.set(-0.2);
   }
 
+  public void frontLiftDown() {
+    frontLifter.set(0.4);
+  }
+
   public void rearLiftUp() {
-    rearLifter.set(0.2);
+    rearLifter.set(-0.2);
   }
 
   public void rearLiftDown() {
-    rearLifter.set(-0.2);
+    rearLifter.set(0.4);
   }
 
   public void lifterDrive(double xSpeed) {
     lifterDrive.set(xSpeed);
+  }
+
+  public void analogLift(double rearX, double frontX) {
+    frontLifter.set(frontX);
+    rearLifter.set(rearX);
   }
 
   public void frontLiftStop() {
@@ -124,6 +128,6 @@ public class LifterSub extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new StopAllLifterCom());
+    setDefaultCommand(new LifterStick());
   }
 }

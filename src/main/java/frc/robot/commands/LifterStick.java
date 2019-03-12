@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class LifterUpCom extends Command {
-    public LifterUpCom() {
+public class LifterStick extends Command {
+    public LifterStick() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.lifterSub);
   }
@@ -24,13 +24,13 @@ public class LifterUpCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.liftUp();
+    Robot.lifterSub.analogLift(Robot.oi.getSecondaryLX(), Robot.oi.getSecondaryRX());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !Robot.lifterSub.getFrontTopLimit() && !Robot.lifterSub.getRearTopLimit(); // limit switch code in LifterSub (so they will stop independantly)
+    return false;//!Robot.lifterSub.getFrontTopLimit() && !Robot.lifterSub.getRearTopLimit() && !Robot.lifterSub.getFrontBottomLimit() && !Robot.lifterSub.getRearBottomLimit(); // limit switch code in LifterSub (so they will stop independantly)
   }
 
   // Called once after isFinished returns true

@@ -62,9 +62,9 @@ public class LifterSub extends Subsystem {
    
   public void liftUp() {
     if (getFrontTopLimit())
-      frontLifter.set(-0.2);
+      frontLifter.set(-0.5);
     if (getRearTopLimit())
-      rearLifter.set(-0.2);
+      rearLifter.set(-0.5);
   }
 
   public void liftDown() {
@@ -75,7 +75,7 @@ public class LifterSub extends Subsystem {
   }
 
   public void frontLiftUp() {
-    frontLifter.set(-0.2);
+    frontLifter.set(-0.5);
   }
 
   public void frontLiftDown() {
@@ -83,7 +83,7 @@ public class LifterSub extends Subsystem {
   }
 
   public void rearLiftUp() {
-    rearLifter.set(-0.2);
+    rearLifter.set(-0.5);
   }
 
   public void rearLiftDown() {

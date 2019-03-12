@@ -71,7 +71,7 @@ public class OI {
   }
 
   public double getX() {
-    return driveStick.getRawAxis(1);
+    return -driveStick.getRawAxis(1);
   }
 
   public double getY() {
@@ -79,7 +79,7 @@ public class OI {
   }
 
   public double getSecondaryY() {
-    return elevatorStick.getRawAxis(0);
+    return -elevatorStick.getRawAxis(0);
   }
 
   public double getSecondaryLX() {

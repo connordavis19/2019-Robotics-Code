@@ -76,23 +76,19 @@ public class LifterSub extends Subsystem {
   }
 
   public void frontLiftUp() {
-    if (getFrontTopLimit())
-      frontLifter.set(0.2);
+    frontLifter.set(0.2);
   }
 
   public void frontLiftDown() {
-    if (getFrontBottomLimit())
-      frontLifter.set(-0.2);
+    frontLifter.set(-0.2);
   }
 
   public void rearLiftUp() {
-    if (getRearTopLimit())
-      rearLifter.set(0.2);
+    rearLifter.set(0.2);
   }
 
   public void rearLiftDown() {
-    if (getRearBottomLimit())
-      rearLifter.set(-0.2);
+    rearLifter.set(-0.2);
   }
 
   public void lifterDrive(double xSpeed) {

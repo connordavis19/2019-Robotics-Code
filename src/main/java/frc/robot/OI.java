@@ -45,10 +45,10 @@ public class OI {
 
     // Elevator Joystick
     elevatorStick = new Joystick(RobotMap.ELEVATOR_STICK_CH);
-    // elevatorUpButton = new JoystickButton(elevatorStick, 1);
-    // elevatorUpButton.whileHeld(new ElevatorUpCom());
-    // elevatorDownButton = new JoystickButton(elevatorStick, 3);
-    // elevatorDownButton.whileHeld(new ElevatorDownCom());
+    elevatorUpButton = new JoystickButton(elevatorStick, 1);
+    elevatorUpButton.whileHeld(new ElevatorUpCom());
+    elevatorDownButton = new JoystickButton(elevatorStick, 3);
+    elevatorDownButton.whileHeld(new ElevatorDownCom());
 
     // Lifter Controls (Using Elevator Joystick)
     rearLiftersUpButton = new JoystickButton(elevatorStick, 4);

@@ -80,7 +80,7 @@ public class DriveTrainSub extends Subsystem {
 
   
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
-    mecDrive.driveCartesian(addDeadband(-ySpeed), addDeadband(xSpeed), addDeadband(zRotation));
+    mecDrive.driveCartesian(addDeadband(ySpeed), addDeadband(xSpeed), addDeadband(zRotation));
     driveSol.set(DoubleSolenoid.Value.kForward);
   }
 

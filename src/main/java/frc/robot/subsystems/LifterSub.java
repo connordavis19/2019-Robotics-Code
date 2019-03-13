@@ -43,7 +43,7 @@ public class LifterSub extends Subsystem {
     SmartDashboard.putData(rearLimitTop);
     SmartDashboard.putData(rearLimitBottom);
   }
-  
+
   public boolean getFrontTopLimit() {
     return frontLimitTop.get();
   }
@@ -51,7 +51,7 @@ public class LifterSub extends Subsystem {
   public boolean getFrontBottomLimit() {
     return frontLimitBottom.get();
   }
-  
+
   public boolean getRearTopLimit() {
     return rearLimitTop.get();
   }
@@ -59,7 +59,7 @@ public class LifterSub extends Subsystem {
   public boolean getRearBottomLimit() {
     return rearLimitBottom.get();
   }
-   
+
   public void liftUp() {
     if (getFrontTopLimit())
       frontLifter.set(-0.5);
@@ -69,9 +69,9 @@ public class LifterSub extends Subsystem {
 
   public void liftDown() {
     if (getFrontBottomLimit())
-      frontLifter.set(0.4);
+      frontLifter.set(0.5);
     if (getRearBottomLimit())
-      rearLifter.set(0.4);
+      rearLifter.set(0.5);
   }
 
   public void frontLiftUp() {
@@ -79,7 +79,7 @@ public class LifterSub extends Subsystem {
   }
 
   public void frontLiftDown() {
-    frontLifter.set(0.4);
+    frontLifter.set(0.5);
   }
 
   public void rearLiftUp() {
@@ -87,7 +87,7 @@ public class LifterSub extends Subsystem {
   }
 
   public void rearLiftDown() {
-    rearLifter.set(0.4);
+    rearLifter.set(0.5);
   }
 
   public void lifterDrive(double xSpeed) {
@@ -115,7 +115,7 @@ public class LifterSub extends Subsystem {
   public void stopLifterDrive() {
     lifterDrive.set(0);
   }
-  
+
   public void stopAll() {
     frontLifter.set(0);
     rearLifter.set(0);

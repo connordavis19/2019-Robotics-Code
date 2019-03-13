@@ -43,7 +43,7 @@ public class LifterSub extends Subsystem {
     SmartDashboard.putData(rearLimitTop);
     SmartDashboard.putData(rearLimitBottom);
   }
-  
+
   public boolean getFrontTopLimit() {
     return frontLimitTop.get();
   }
@@ -51,7 +51,7 @@ public class LifterSub extends Subsystem {
   public boolean getFrontBottomLimit() {
     return frontLimitBottom.get();
   }
-  
+
   public boolean getRearTopLimit() {
     return rearLimitTop.get();
   }
@@ -59,7 +59,7 @@ public class LifterSub extends Subsystem {
   public boolean getRearBottomLimit() {
     return rearLimitBottom.get();
   }
-   
+
   public void liftUp() {
     if (getFrontTopLimit())
       frontLifter.set(-0.52);
@@ -69,9 +69,15 @@ public class LifterSub extends Subsystem {
 
   public void liftDown() {
     if (getFrontBottomLimit())
+<<<<<<< HEAD
       frontLifter.set(0.52);
     if (getRearBottomLimit())
       rearLifter.set(.55);
+=======
+      frontLifter.set(0.5);
+    if (getRearBottomLimit())
+      rearLifter.set(0.5);
+>>>>>>> d25d89260cc8f850f823a39169d9ed34b70438d2
   }
 
   public void frontLiftUp() {
@@ -115,7 +121,7 @@ public class LifterSub extends Subsystem {
   public void stopLifterDrive() {
     lifterDrive.set(0);
   }
-  
+
   public void stopAll() {
     frontLifter.set(0);
     rearLifter.set(0);
@@ -128,7 +134,11 @@ public class LifterSub extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
+<<<<<<< HEAD
     // setDefaultCommand(new LifterStick());
+=======
+    setDefaultCommand(new LifterStick());
+>>>>>>> d25d89260cc8f850f823a39169d9ed34b70438d2
     setDefaultCommand(new LifterDriveCom());
   }
 }

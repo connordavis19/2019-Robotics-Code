@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -19,14 +21,34 @@ import frc.robot.RobotMap;
  */
 public class HerderSub extends Subsystem {
 
-  private AnalogInput herderPot;
+  private AnalogPotentiometer herderPot;
+  private PIDController myPID;
   private WPI_VictorSPX herder;
+  private double kP, kI, kD, kIz, kF, kMaxOutput, kMinOutput;
 
   public HerderSub() {
     // create new AnalogInput (potentiometer)
-    herderPot = new AnalogInput(RobotMap.HERDER_POT_CH);
+    herderPot = new AnalogPotentiometer(RobotMap.HERDER_POT_CH);
     // create herder motor (VictorSPX)
     herder = new WPI_VictorSPX(RobotMap.HERDER_MOTOR_CH);
+
+    // create pidcontroller
+    myPID = new PIDController(0, 0, 0, herderPot, herder);
+
+    // create PID coefficients
+    kP = 0.1;
+    kI = 1e-4;
+    kD = 150;
+    kF = 0;
+    kMaxOutput = 0.2;
+    kMinOutput = -0.2;
+
+    // set PID coefficients
+    myPID.setP(kP);
+    myPID.setI(kI);
+    myPID.setD(kD);
+    myPID.setF(kF);
+    myPID.setInputRange(kMinOutput, kMaxOutput);
 
     // send to SmartDashboard
     SmartDashboard.putData(herderPot);
@@ -38,7 +60,11 @@ public class HerderSub extends Subsystem {
 
   // get (voltage) of potentiometer
   public double getHerderPot() {
-    return herderPot.getVoltage();
+    return herderPot.get();
+  }
+
+  public void setPID(double setPoint) {
+    myPID.setSetpoint(setPoint);
   }
 
   public void setHerder(double speed) {

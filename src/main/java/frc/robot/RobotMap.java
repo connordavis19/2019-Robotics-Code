@@ -25,6 +25,7 @@ public static int REAR_LEFT_CHANNEL = 2;
 public static int ELEVATOR_MOTOR_CHANNEL = 11;
 public static int UPPER_ELEVATOR_LIMIT_CHANNEL= 1;
 public static int LOWER_ELEVATOR_LIMIT_CHANNEL= 0;
+public static int ELEVATOR_POT_CH = 3; // TODO: change ID
 
 //Create constants for lifters and lifter limits
 public static int FRONT_LIFTER_CH = 10;
@@ -34,6 +35,8 @@ public static int FRONT_LIMIT_TOP_CH = 9;
 public static int FRONT_LIMIT_BOTTOM_CH = 2;
 public static int REAR_LIMIT_TOP_CH = 8;
 public static int REAR_LIMIT_BOTTOM_CH = 6;
+public static int FRONT_LIFTER_POT_CH = 1; // TODO: change ID
+public static int REAR_LIFTER_POT_CH = 2; // TODO: change ID
 
 //Create constants for the drive solenoid channels- these should stay the same
 public static int DRIVE_SOL_FORWARD_CH = 0;

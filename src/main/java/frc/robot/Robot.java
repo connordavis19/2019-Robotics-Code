@@ -26,7 +26,6 @@ public class Robot extends TimedRobot {
   public static DriveTrainSub driveTrainSub;
   public static ElevatorSub elevatorSub;
   public static LifterSub lifterSub;
-  public static PIDSub pidSub;
   public static OI oi;
 
   Command m_autonomousCommand;
@@ -41,7 +40,6 @@ public class Robot extends TimedRobot {
     driveTrainSub = new DriveTrainSub();
     elevatorSub = new ElevatorSub();
     lifterSub = new LifterSub();
-    pidSub = new PIDSub();
     oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new MecanumDriveCom());
     m_chooser.addOption("My Auto", new MecanumDriveCom());

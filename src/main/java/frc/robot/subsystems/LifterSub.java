@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.LifterStick;
+import frc.robot.commands.*;
 
 /**
  * Add your docs here.
@@ -62,16 +62,16 @@ public class LifterSub extends Subsystem {
    
   public void liftUp() {
     if (getFrontTopLimit())
-      frontLifter.set(-0.5);
+      frontLifter.set(-0.52);
     if (getRearTopLimit())
-      rearLifter.set(-0.5);
+      rearLifter.set(-0.55);
   }
 
   public void liftDown() {
     if (getFrontBottomLimit())
-      frontLifter.set(0.4);
+      frontLifter.set(0.52);
     if (getRearBottomLimit())
-      rearLifter.set(0.4);
+      rearLifter.set(.55);
   }
 
   public void frontLiftUp() {
@@ -79,7 +79,7 @@ public class LifterSub extends Subsystem {
   }
 
   public void frontLiftDown() {
-    frontLifter.set(0.4);
+    frontLifter.set(0.5);
   }
 
   public void rearLiftUp() {
@@ -87,7 +87,7 @@ public class LifterSub extends Subsystem {
   }
 
   public void rearLiftDown() {
-    rearLifter.set(0.4);
+    rearLifter.set(0.5);
   }
 
   public void lifterDrive(double xSpeed) {
@@ -128,6 +128,7 @@ public class LifterSub extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new LifterStick());
+    // setDefaultCommand(new LifterStick());
+    setDefaultCommand(new LifterDriveCom());
   }
 }

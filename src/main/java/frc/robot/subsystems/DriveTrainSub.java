@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.RobotMap;
+import frc.robot.commands.ArcadeDriveCom;
 import frc.robot.commands.MecanumDriveCom;
 
 /**
@@ -80,13 +81,13 @@ public class DriveTrainSub extends Subsystem {
 
   
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
-    mecDrive.driveCartesian(addDeadband(ySpeed), addDeadband(xSpeed), addDeadband(zRotation));
-    driveSol.set(DoubleSolenoid.Value.kForward);
+    mecDrive.driveCartesian((addDeadband(ySpeed)), (addDeadband(xSpeed)), (addDeadband(zRotation)));
+    driveSol.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void arcadeDrive(double xSpeed, double zRotation) {
     arcDrive.arcadeDrive(addDeadband(-xSpeed), addDeadband(zRotation));
-    driveSol.set(DoubleSolenoid.Value.kReverse);
+    driveSol.set(DoubleSolenoid.Value.kForward);
   }
 
   // Adds deadband to a given axis (for driving only)
@@ -101,6 +102,6 @@ public class DriveTrainSub extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new MecanumDriveCom());
+    setDefaultCommand(new ArcadeDriveCom());
   }
 }

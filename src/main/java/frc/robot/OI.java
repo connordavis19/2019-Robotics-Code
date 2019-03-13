@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DigitalGlitchFilter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.commands.*;
 
 /**
@@ -41,32 +42,31 @@ public class OI {
     // Drive Joystick
     driveStick = new Joystick(RobotMap.DRIVE_STICK_CH);
     shiftButton = new JoystickButton(driveStick, RobotMap.SHIFT_BUTTON_CH);
-    shiftButton.toggleWhenPressed(new ArcadeDriveCom());
+    shiftButton.toggleWhenPressed(new MecanumDriveCom());
 
     // Elevator Joystick
     elevatorStick = new Joystick(RobotMap.ELEVATOR_STICK_CH);
-    elevatorUpButton = new JoystickButton(elevatorStick, 1);
+    elevatorUpButton = new JoystickButton(elevatorStick, 3);
     elevatorUpButton.whileHeld(new ElevatorUpCom());
-    elevatorDownButton = new JoystickButton(elevatorStick, 3);
+    elevatorDownButton = new JoystickButton(elevatorStick, 1);
     elevatorDownButton.whileHeld(new ElevatorDownCom());
-
-    // Lifter Controls (Using Elevator Joystick)
-    rearLiftersUpButton = new JoystickButton(elevatorStick, 4);
-    rearLiftersDownButton = new JoystickButton(elevatorStick, 2);
-    frontLiftersUpButton = new JoystickButton(elevatorStick, 3);
-    frontLiftersDownButton = new JoystickButton(elevatorStick, 1);
-    liftersUp = new JoystickButton(elevatorStick, 6);
-    liftersDown = new JoystickButton(elevatorStick, 5);
-    lifterDrive = new JoystickButton(elevatorStick, 7);
-    // lifterStick = new JoystickButton(elevatorStick, 8);
-    // lifterStick.toggleWhenPressed(new LifterStick());
-    lifterDrive.toggleWhenPressed(new LifterDriveCom());
-    liftersUp.whileHeld(new LifterUpCom());
-    liftersDown.whileHeld(new LifterDownCom());
-    rearLiftersUpButton.whileHeld(new RearLifterUpCom());
-    rearLiftersDownButton.whileHeld(new RearLifterDownCom());
-    frontLiftersUpButton.whileHeld(new FrontLifterUpCom());
-    frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
+      // Lifter Controls (Using Elevator Joystick)
+      rearLiftersUpButton = new JoystickButton(elevatorStick, 5);
+      rearLiftersDownButton = new JoystickButton(elevatorStick, 2);
+      frontLiftersUpButton = new JoystickButton(elevatorStick, 6);
+      frontLiftersDownButton = new JoystickButton(elevatorStick, 22);
+      liftersUp = new JoystickButton(elevatorStick, 2);
+      liftersDown = new JoystickButton(elevatorStick, 4);
+      lifterDrive = new JoystickButton(elevatorStick, 7);
+      // lifterStick = new JoystickButton(elevatorStick, 8);
+      // lifterStick.whileHeld(new LifterStick());
+      lifterDrive.whileHeld(new LifterDriveCom());
+      liftersUp.whileHeld(new LifterUpCom());
+      liftersDown.whileHeld(new LifterDownCom());
+      rearLiftersUpButton.whileHeld(new RearLifterUpCom());
+      rearLiftersDownButton.whileHeld(new RearLifterDownCom());
+      frontLiftersUpButton.whileHeld(new FrontLifterUpCom());
+      frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
 
   }
 
@@ -76,6 +76,10 @@ public class OI {
 
   public double getY() {
     return driveStick.getRawAxis(0);
+  }
+
+  public double getTwist() {
+    return driveStick.getRawAxis(2);
   }
 
   public double getSecondaryY() {
@@ -88,10 +92,6 @@ public class OI {
 
   public double getSecondaryRX() {
     return elevatorStick.getRawAxis(3) * 0.5;
-  }
-
-  public double getTwist() {
-    return driveStick.getRawAxis(4);
   }
 
   public boolean getLeftEye() {

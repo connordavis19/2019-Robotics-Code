@@ -28,6 +28,8 @@ public class OI {
 
   private JoystickButton rearLiftersUpButton, rearLiftersDownButton, frontLiftersUpButton, frontLiftersDownButton, liftersUp, liftersDown, lifterDrive, lifterStick;
 
+  private JoystickButton pidButton;
+
   private double xSpeed;
   private double ySpeed;
   private double zRotation;
@@ -45,9 +47,9 @@ public class OI {
 
     // Elevator Joystick
     elevatorStick = new Joystick(RobotMap.ELEVATOR_STICK_CH);
-    elevatorUpButton = new JoystickButton(elevatorStick, 1);
+    elevatorUpButton = new JoystickButton(elevatorStick, 8);
     elevatorUpButton.whileHeld(new ElevatorUpCom());
-    elevatorDownButton = new JoystickButton(elevatorStick, 3);
+    elevatorDownButton = new JoystickButton(elevatorStick, 7);
     elevatorDownButton.whileHeld(new ElevatorDownCom());
 
     // Lifter Controls (Using Elevator Joystick)
@@ -57,10 +59,10 @@ public class OI {
     frontLiftersDownButton = new JoystickButton(elevatorStick, 1);
     liftersUp = new JoystickButton(elevatorStick, 6);
     liftersDown = new JoystickButton(elevatorStick, 5);
-    lifterDrive = new JoystickButton(elevatorStick, 7);
+    // lifterDrive = new JoystickButton(elevatorStick, 7);
     // lifterStick = new JoystickButton(elevatorStick, 8);
     // lifterStick.toggleWhenPressed(new LifterStick());
-    lifterDrive.toggleWhenPressed(new LifterDriveCom());
+    // lifterDrive.toggleWhenPressed(new LifterDriveCom());
     liftersUp.whileHeld(new LifterUpCom());
     liftersDown.whileHeld(new LifterDownCom());
     rearLiftersUpButton.whileHeld(new RearLifterUpCom());
@@ -68,6 +70,9 @@ public class OI {
     frontLiftersUpButton.whileHeld(new FrontLifterUpCom());
     frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
 
+    // PID Controls (Using Elevator Joystick)
+    pidButton = new JoystickButton(elevatorStick, 8);
+    pidButton.whileHeld(new HerderPIDCommand());
   }
 
   public double getX() {

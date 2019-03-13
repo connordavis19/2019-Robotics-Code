@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.LifterStick;
+import frc.robot.commands.*;
 
 /**
  * Add your docs here.
@@ -129,5 +129,6 @@ public class LifterSub extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new LifterStick());
+    setDefaultCommand(new LifterDriveCom());
   }
 }

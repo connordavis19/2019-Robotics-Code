@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
   public static LifterSub lifterSub;
   public static HerderSub herderSub;
   public static OI oi;
+  public static ServoSub servoSub;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -42,7 +43,9 @@ public class Robot extends TimedRobot {
     elevatorSub = new ElevatorSub();
     lifterSub = new LifterSub();
     herderSub = new HerderSub();
+    servoSub = new ServoSub();
     oi = new OI();
+
     m_chooser.setDefaultOption("Default Auto", new MecanumDriveCom());
     m_chooser.addOption("My Auto", new MecanumDriveCom());
     SmartDashboard.putData("Auto mode", m_chooser);

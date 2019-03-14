@@ -27,6 +27,10 @@ public static int UPPER_ELEVATOR_LIMIT_CHANNEL= 1;
 public static int LOWER_ELEVATOR_LIMIT_CHANNEL= 0;
 public static int ELEVATOR_POT_CH = 3; // TODO: change ID
 
+// Create constants for servo PWM location
+public static int TRAVERSE_SERVO_CHANNEL = 4;
+public static int YAW_SERVO_CHANNEL = 5; 
+
 //Create constants for lifters and lifter limits
 public static int FRONT_LIFTER_CH = 10;
 public static int REAR_LIFTER_CH = 12;

@@ -7,14 +7,13 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorStopCom;
 
@@ -26,6 +25,8 @@ public class ElevatorSub extends Subsystem {
   private WPI_VictorSPX elevatorMotor;
   private DigitalInput elevatorTopLimit;
   private DigitalInput elevatorBottomLimit;
+  private PIDController myPID;
+  private AnalogPotentiometer elevatorPot;
 
   public ElevatorSub() {
     elevatorMotor = new WPI_VictorSPX(RobotMap.ELEVATOR_MOTOR_CHANNEL);
@@ -33,6 +34,14 @@ public class ElevatorSub extends Subsystem {
     SmartDashboard.putData(elevatorTopLimit);
     elevatorBottomLimit = new DigitalInput(RobotMap.LOWER_ELEVATOR_LIMIT_CHANNEL);
     SmartDashboard.putData(elevatorBottomLimit);
+
+    // instantiate pidcontroller and potentiometer
+    elevatorPot = new AnalogPotentiometer(RobotMap.ELEVATOR_POT_CH);
+    myPID = new PIDController(0.1, 1e-4, 150, elevatorPot, elevatorMotor);
+
+    // send pidcontroller and potentiometer to smartdashboard for testing
+    SmartDashboard.putData(elevatorPot);
+    SmartDashboard.putData(myPID);
   }
 
   public boolean getTopLimit() {
@@ -53,6 +62,20 @@ public class ElevatorSub extends Subsystem {
 
   public void elevatorStop() {
     elevatorMotor.set(0);
+  }
+
+   /**
+   * @return the elevatorPot
+   */
+  public double getElevatorPot() {
+    return elevatorPot.get();
+  }
+
+   /**
+    * @param the setpoint for the pid
+    */
+  public void setPID(double setPoint) {
+    myPID.setSetpoint(setPoint);
   }
 
   // Put methods for controlling this subsystem

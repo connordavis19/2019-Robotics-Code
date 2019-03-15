@@ -16,7 +16,6 @@ package frc.robot;
 public class RobotMap {
 
 // Create constants for potentiometers
-public static int ELEVATOR_POT_CH = 3; // TODO: change ID
 public static int HERDER_POT_CH = 0;
 public static int FRONT_LIFTER_POT_CH = 0; // TODO: change ID
 public static int REAR_LIFTER_POT_CH = 1; // TODO: change ID
@@ -31,6 +30,7 @@ public static int REAR_LEFT_CHANNEL = 2;
 public static int ELEVATOR_MOTOR_CHANNEL = 11;
 public static int UPPER_ELEVATOR_LIMIT_CHANNEL= 1;
 public static int LOWER_ELEVATOR_LIMIT_CHANNEL= 0;
+public static int ELEVATOR_POT_CH = 2;
 
 // Create constants for herder motors
 public static int HERDER_BOTTOM_COLLECTOR_CHANNEL = 22; //TODO: set to 12

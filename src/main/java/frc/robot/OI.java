@@ -71,10 +71,10 @@ public class OI {
       dispense = new JoystickButton(elevatorStick, 6);
       herderUpButton = new JoystickButton(elevatorStick, 4);
       herderDownButton = new JoystickButton(elevatorStick, 2);
-      // collect.whileHeld(new HerderCollect());
-      // dispense.whileHeld(new HerderDispense());
-      // herderUpButton.whileHeld(new HerderUpCom());
-      // herderDownButton.whileHeld(new HerderDownCom());
+      collect.whileHeld(new HerderCollect());
+      dispense.whileHeld(new HerderDispense());
+      herderUpButton.whileHeld(new HerderUpCom());
+      herderDownButton.whileHeld(new HerderDownCom());
 
     // PID Controls (Using Elevator Joystick)
     pidButton = new JoystickButton(elevatorStick, 8);

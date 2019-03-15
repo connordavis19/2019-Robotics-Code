@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
   public static ElevatorSub elevatorSub;
   public static LifterSub lifterSub;
   public static HerderSub herderSub;
+  public static HerderSub secondHerderSub;
   public static OI oi;
   public static ServoSub servoSub;
 

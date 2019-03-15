@@ -15,6 +15,12 @@ package frc.robot;
  */
 public class RobotMap {
 
+// Create constants for potentiometers
+public static int ELEVATOR_POT_CH = 3; // TODO: change ID
+public static int HERDER_POT_CH = 0;
+public static int FRONT_LIFTER_POT_CH = 0; // TODO: change ID
+public static int REAR_LIFTER_POT_CH = 1; // TODO: change ID
+
 // Create constants for the drive motors- change the values to the motor controller ID
 public static int FRONT_LEFT_CHANNEL = 3;
 public static int FRONT_RIGHT_CHANNEL = 5;
@@ -25,7 +31,11 @@ public static int REAR_LEFT_CHANNEL = 2;
 public static int ELEVATOR_MOTOR_CHANNEL = 11;
 public static int UPPER_ELEVATOR_LIMIT_CHANNEL= 1;
 public static int LOWER_ELEVATOR_LIMIT_CHANNEL= 0;
-public static int ELEVATOR_POT_CH = 3; // TODO: change ID
+
+// Create constants for herder motors
+public static int HERDER_BOTTOM_COLLECTOR_CHANNEL = 22; //TODO: set to 12
+public static int HERDER_TOP_COLLECTOR_CHANNEL = 7;
+public static int HERDER_MOTOR_CHANNEL = 12;  //TODO: set to 8
 
 // Create constants for servo PWM location
 public static int TRAVERSE_SERVO_CHANNEL = 4;
@@ -33,14 +43,13 @@ public static int YAW_SERVO_CHANNEL = 5;
 
 //Create constants for lifters and lifter limits
 public static int FRONT_LIFTER_CH = 10;
-public static int REAR_LIFTER_CH = 12;
+public static int REAR_LIFTER_CH = 6;
 public static int LIFTER_DRIVE_CH = 9;
 public static int FRONT_LIMIT_TOP_CH = 9;
 public static int FRONT_LIMIT_BOTTOM_CH = 2;
 public static int REAR_LIMIT_TOP_CH = 8;
 public static int REAR_LIMIT_BOTTOM_CH = 6;
-public static int FRONT_LIFTER_POT_CH = 1; // TODO: change ID
-public static int REAR_LIFTER_POT_CH = 2; // TODO: change ID
+
 
 //Create constants for the drive solenoid channels- these should stay the same
 public static int DRIVE_SOL_FORWARD_CH = 0;
@@ -55,13 +64,6 @@ public static int ELEVATOR_STICK_CH = 1;
 
 //Create constant for deadband
 public static double DEADBAND_CH = 0.05;
-
-//Create constant for herder potentiometer
-public static int HERDER_POT_CH = 0;
-
-//Create constant for herder motor
-public static int HERDER_MOTOR_CH = 0; // TODO: set ID
-
 
 
 

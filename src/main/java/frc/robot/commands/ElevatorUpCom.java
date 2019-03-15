@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.OI;
 
 public class ElevatorUpCom extends Command {
   public ElevatorUpCom() {
@@ -19,6 +20,7 @@ public class ElevatorUpCom extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.elevatorSub.elevatorUp();
   }
 
   // Called repeatedly when this Command is scheduled to run

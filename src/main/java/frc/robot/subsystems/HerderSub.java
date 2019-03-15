@@ -23,14 +23,20 @@ public class HerderSub extends Subsystem {
 
   private AnalogPotentiometer herderPot;
   private PIDController myPID;
-  private WPI_VictorSPX herder;
+
   private double kP, kI, kD, kIz, kF, kMaxOutput, kMinOutput;
+
+  private WPI_VictorSPX herder;
+  private WPI_VictorSPX herderCollectorTop;
+  private WPI_VictorSPX herderCollectorBottom;
 
   public HerderSub() {
     // create new AnalogInput (potentiometer)
     herderPot = new AnalogPotentiometer(RobotMap.HERDER_POT_CH);
     // create herder motor (VictorSPX)
-    herder = new WPI_VictorSPX(RobotMap.HERDER_MOTOR_CH);
+    herder = new WPI_VictorSPX(RobotMap.HERDER_MOTOR_CHANNEL);
+    herderCollectorTop = new WPI_VictorSPX(RobotMap.HERDER_TOP_COLLECTOR_CHANNEL);
+    herderCollectorBottom = new WPI_VictorSPX(RobotMap.HERDER_BOTTOM_COLLECTOR_CHANNEL);
 
     // create pidcontroller
     myPID = new PIDController(0, 0, 0, herderPot, herder);
@@ -52,6 +58,7 @@ public class HerderSub extends Subsystem {
 
     // send to SmartDashboard
     SmartDashboard.putData(herderPot);
+    SmartDashboard.putData(myPID);
     SmartDashboard.putData(herder);
   }
 
@@ -67,8 +74,32 @@ public class HerderSub extends Subsystem {
     myPID.setSetpoint(setPoint);
   }
 
-  public void setHerder(double speed) {
-    herder.set(speed);
+  public void collect() {
+    herderCollectorBottom.set(1);
+    herderCollectorTop.set(1);
+  }
+
+  public void dispense() {
+    herderCollectorBottom.set(-1);
+    herderCollectorTop.set(-1);
+  }
+
+  public void herderCollectStop()
+  {
+    herderCollectorBottom.set(0);
+    herderCollectorTop.set(0);
+  }
+
+  public void herderUp() {
+    herder.set(0.25);
+  }
+
+  public void herderDown() {
+    herder.set(-0.25);
+  }
+
+  public void herderStop() {
+    herder.set(0);
   }
 
   @Override

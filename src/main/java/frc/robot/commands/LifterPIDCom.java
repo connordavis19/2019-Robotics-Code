@@ -10,10 +10,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class HerderPIDCommand extends Command {
-    public HerderPIDCommand() {
+public class LifterPIDCom extends Command {
+    public LifterPIDCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.herderSub);
+    requires(Robot.lifterSub);
   }
 
   // Called just before this Command runs the first time
@@ -24,10 +24,10 @@ public class HerderPIDCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.herderSub.setPID(0);
-    Robot.herderSub.getHerderPot();
-    
-    // Robot.herderSub.setPID(0); // TODO: find a midpoint to use to test if it can hold the herder in position
+    Robot.lifterSub.setFrontLifterPID(0); // TODO: find a midpoint to use to test if it can hold the herder in position
+    Robot.lifterSub.setRearLifterPID(0);
+    Robot.lifterSub.getFrontLifterPot();
+    Robot.lifterSub.getRearLifterPot();
   }
 
   // Make this return true when this Command no longer needs to run execute()

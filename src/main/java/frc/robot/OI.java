@@ -27,7 +27,7 @@ public class OI {
   private JoystickButton elevatorUpButton;
   private JoystickButton elevatorDownButton;
 
-  private JoystickButton rearLiftersUpButton, rearLiftersDownButton, frontLiftersUpButton, frontLiftersDownButton, liftersUp, liftersDown, lifterDrive, lifterStick;
+  private JoystickButton rearLiftersUpButton, rearLiftersDownButton, frontLiftersUpButton, frontLiftersDownButton, liftersUp, liftersDown, lifterDrive, lifterStick, collect, dispense, herderUpButton, herderDownButton;
 
   private JoystickButton pidButton;
 
@@ -54,22 +54,25 @@ public class OI {
     elevatorDownButton = new JoystickButton(elevatorStick, 1);
     elevatorDownButton.whileHeld(new ElevatorDownCom());
       // Lifter Controls (Using Elevator Joystick)
-      rearLiftersUpButton = new JoystickButton(elevatorStick, 5);
-      rearLiftersDownButton = new JoystickButton(elevatorStick, 2);
-      frontLiftersUpButton = new JoystickButton(elevatorStick, 6);
-      frontLiftersDownButton = new JoystickButton(elevatorStick, 22);
-      liftersUp = new JoystickButton(elevatorStick, 2);
-      liftersDown = new JoystickButton(elevatorStick, 4);
+      // rearLiftersDownButton = new JoystickButton(elevatorStick, 2);
+      // frontLiftersDownButton = new JoystickButton(elevatorStick, 22);
+      // liftersUp = new JoystickButton(elevatorStick, 2);
+      // liftersDown = new JoystickButton(elevatorStick, 4);
       lifterDrive = new JoystickButton(elevatorStick, 7);
-      // lifterStick = new JoystickButton(elevatorStick, 8);
-      // lifterStick.whileHeld(new LifterStick());
       lifterDrive.whileHeld(new LifterDriveCom());
-      liftersUp.whileHeld(new LifterUpCom());
-      liftersDown.whileHeld(new LifterDownCom());
-      rearLiftersUpButton.whileHeld(new RearLifterUpCom());
-      rearLiftersDownButton.whileHeld(new RearLifterDownCom());
-      frontLiftersUpButton.whileHeld(new FrontLifterUpCom());
-      frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
+      // liftersUp.whileHeld(new LifterUpCom());
+      // liftersDown.whileHeld(new LifterDownCom());
+      // rearLiftersDownButton.whileHeld(new RearLifterDownCom());
+      // frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
+      // Herder Controls
+      collect = new JoystickButton(elevatorStick, 5);
+      dispense = new JoystickButton(elevatorStick, 6);
+      herderUpButton = new JoystickButton(elevatorStick, 4);
+      herderDownButton = new JoystickButton(elevatorStick, 2);
+      collect.whileHeld(new HerderCollect());
+      dispense.whileHeld(new HerderDispense());
+      herderUpButton.whileHeld(new HerderUpCom());
+      herderDownButton.whileHeld(new HerderDownCom());
 
     // PID Controls (Using Elevator Joystick)
     pidButton = new JoystickButton(elevatorStick, 8);

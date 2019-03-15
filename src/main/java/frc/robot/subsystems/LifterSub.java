@@ -9,7 +9,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -20,10 +22,49 @@ import frc.robot.commands.*;
  */
 public class LifterSub extends Subsystem {
 
+  private AnalogPotentiometer frontLifterPot;
+  private AnalogPotentiometer rearLifterPot;
+
+  private PIDController frontLifterPID;
+  private PIDController rearLifterPID;
+  private double kP, kI, kD, kIz, kF, kMaxOutput, kMinOutput;
+
   private WPI_VictorSPX frontLifter, rearLifter, lifterDrive;
   private DigitalInput frontLimitTop, frontLimitBottom, rearLimitTop, rearLimitBottom;
 
   public LifterSub() {
+    // // create lifter potentionmetrs
+    // frontLifterPot = new AnalogPotentiometer(RobotMap.FRONT_LIFTER_POT_CH);
+    // rearLifterPot = new AnalogPotentiometer(RobotMap.REAR_LIFTER_POT_CH);
+    
+    // // create pidcontroller
+    // frontLifterPID = new PIDController(0, 0, 0, frontLifterPot, frontLifter);
+    // rearLifterPID = new PIDController(0, 0, 0, rearLifterPot, rearLifter);
+
+    // // create PID coefficients
+    // kP = 0.1;
+    // kI = 1e-4;
+    // kD = 150;
+    // kF = 0;
+    // kMaxOutput = 0.2;
+    // kMinOutput = -0.2;
+
+    // // set PID coefficients
+    //   //Front Lifter PID
+    //   frontLifterPID.setP(kP);
+    //   frontLifterPID.setI(kI);
+    //   frontLifterPID.setD(kD);
+    //   frontLifterPID.setF(kF);
+    //   frontLifterPID.setInputRange(kMinOutput, kMaxOutput);
+    //   //Rear Lifter PID
+    //   rearLifterPID.setP(kP);
+    //   rearLifterPID.setI(kI);
+    //   rearLifterPID.setD(kD);
+    //   rearLifterPID.setF(kF);
+    //   rearLifterPID.setInputRange(kMinOutput, kMaxOutput);
+
+    // send to SmartDashboard
+
     // set lifter motors (see RobotMap for IDs)
     frontLifter = new WPI_VictorSPX(RobotMap.FRONT_LIFTER_CH);
     rearLifter = new WPI_VictorSPX(RobotMap.REAR_LIFTER_CH);
@@ -42,6 +83,24 @@ public class LifterSub extends Subsystem {
     SmartDashboard.putData(frontLimitBottom);
     SmartDashboard.putData(rearLimitTop);
     SmartDashboard.putData(rearLimitBottom);
+    // SmartDashboard.putData(frontLifterPot);
+    // SmartDashboard.putData(rearLifterPot);
+  }
+
+  public double getFrontLifterPot() {
+    return frontLifterPot.get();
+  }
+
+  public void setFrontLifterPID(double setPoint) {
+    frontLifterPID.setSetpoint(setPoint);
+  }
+
+  public double getRearLifterPot() {
+    return rearLifterPot.get();
+  }
+
+  public void setRearLifterPID(double setPoint) {
+    rearLifterPID.setSetpoint(setPoint);
   }
 
   public boolean getFrontTopLimit() {

@@ -7,12 +7,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DigitalGlitchFilter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import frc.robot.commands.*;
+import frc.robot.commands.ElevatorDownCom;
+import frc.robot.commands.ElevatorUpCom;
+import frc.robot.commands.HerderPIDCommand;
+import frc.robot.commands.LifterDriveCom;
+import frc.robot.commands.MecanumDriveCom;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -69,10 +71,10 @@ public class OI {
       dispense = new JoystickButton(elevatorStick, 6);
       herderUpButton = new JoystickButton(elevatorStick, 4);
       herderDownButton = new JoystickButton(elevatorStick, 2);
-      collect.whileHeld(new HerderCollect());
-      dispense.whileHeld(new HerderDispense());
-      herderUpButton.whileHeld(new HerderUpCom());
-      herderDownButton.whileHeld(new HerderDownCom());
+      // collect.whileHeld(new HerderCollect());
+      // dispense.whileHeld(new HerderDispense());
+      // herderUpButton.whileHeld(new HerderUpCom());
+      // herderDownButton.whileHeld(new HerderDownCom());
 
     // PID Controls (Using Elevator Joystick)
     pidButton = new JoystickButton(elevatorStick, 8);

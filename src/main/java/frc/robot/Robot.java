@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     elevatorSub = new ElevatorSub();
     lifterSub = new LifterSub();
     herderSub = new HerderSub();
-    servoSub = new ServoSub();
+    // servoSub = new ServoSub();
     oi = new OI();
 
     m_chooser.setDefaultOption("Default Auto", new MecanumDriveCom());

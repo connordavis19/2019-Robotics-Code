@@ -10,17 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.BuffaloNoseInCom;
-import frc.robot.commands.BuffaloNoseOutCom;
-import frc.robot.commands.ElevatorDownCom;
-import frc.robot.commands.ElevatorUpCom;
-import frc.robot.commands.HerderCollect;
-import frc.robot.commands.HerderDispense;
-import frc.robot.commands.HerderDownCom;
-import frc.robot.commands.HerderPIDCommand;
-import frc.robot.commands.HerderUpCom;
-import frc.robot.commands.LifterDriveCom;
-import frc.robot.commands.MecanumDriveCom;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -41,6 +31,8 @@ public class OI {
       liftersUp, liftersDown, lifterDrive, lifterStick, collect, dispense, herderUpButton, herderDownButton;
 
   private JoystickButton pidButton;
+
+  private JoystickButton frontLifterPID, rearLifterPID;
 
   private double xSpeed;
   private double ySpeed;
@@ -76,6 +68,8 @@ public class OI {
     // rearLiftersDownButton.whileHeld(new RearLifterDownCom());
     // frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
     // Herder Controls
+    frontLiftersUpButton = new JoystickButton(elevatorStick, 9);
+    frontLiftersDownButton = new JoystickButton(elevatorStick, 10);
     collect = new JoystickButton(elevatorStick, 5);
     dispense = new JoystickButton(elevatorStick, 6);
     herderUpButton = new JoystickButton(elevatorStick, 4);

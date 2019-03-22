@@ -37,7 +37,7 @@ public class LifterSub extends Subsystem {
     frontLifter = new WPI_VictorSPX(RobotMap.FRONT_LIFTER_CH);
     rearLifter = new WPI_VictorSPX(RobotMap.REAR_LIFTER_CH);
     lifterDrive = new WPI_VictorSPX(RobotMap.LIFTER_DRIVE_CH);
-    
+
     // create lifter potentionmetrs
     frontLifterPot = new AnalogPotentiometer(RobotMap.FRONT_LIFTER_POT_CH);
     rearLifterPot = new AnalogPotentiometer(RobotMap.REAR_LIFTER_POT_CH);
@@ -189,6 +189,6 @@ public class LifterSub extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new LifterStick());
-    setDefaultCommand(new LifterDriveCom());
+    setDefaultCommand(new RearLifterSlaveAndDriveCom());
   }
 }

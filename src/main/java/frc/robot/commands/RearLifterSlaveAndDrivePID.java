@@ -5,10 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package main.java.frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.*;
 
 public class LifterPIDCom extends Command {
     public LifterPIDCom() {
@@ -24,8 +25,9 @@ public class LifterPIDCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.setFrontLifterPID(0); // TODO: find a midpoint to use to test if it can hold the herder in position
-    Robot.lifterSub.setRearLifterPID(0);
+    Robot.lifterSub.setRearLifterPID(Robot.lifterSub.getFrontLifterPot());
+    Robot.lifterSub.lifterDrive(Robot.oi.getSecondaryY());
+    Robot.lifterSub.analogLift(Robot.oi.getSecondaryLX(), Robot.oi.getSecondaryRX());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,6 +39,8 @@ public class LifterPIDCom extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.lifterSub.stopLifterDrive();
+    Robot.lifterSub.stopLifters();
   }
 
   // Called when another command which requires one or more of the same

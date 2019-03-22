@@ -24,10 +24,10 @@ public class HerderPIDCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // Robot.herderSub.setPID(0);
-    // Robot.herderSub.getHerderPot();
+    Robot.herderSub.setPID(0);
+    Robot.herderSub.getHerderPot();
     
-    // Robot.herderSub.setPID(0); // TODO: find a midpoint to use to test if it can hold the herder in position
+    Robot.herderSub.setPID(1); // TODO: find a midpoint to use to test if it can hold the herder in position
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +39,7 @@ public class HerderPIDCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.herderSub.herderStop();
   }
 
   // Called when another command which requires one or more of the same

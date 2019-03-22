@@ -83,7 +83,7 @@ public class OI {
 
     // PID Controls (Using Elevator Joystick)
     pidButton = new JoystickButton(elevatorStick, 8);
-    pidButton.whileHeld(new HerderPIDCommand());
+    pidButton.toggleWhenPressed(new HerderPIDCommand());
   }
 
   public double getX() {

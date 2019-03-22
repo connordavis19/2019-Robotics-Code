@@ -33,43 +33,42 @@ public class LifterSub extends Subsystem {
   private DigitalInput frontLimitTop, frontLimitBottom, rearLimitTop, rearLimitBottom;
 
   public LifterSub() {
+    // // create lifter potentionmetrs
+    // frontLifterPot = new AnalogPotentiometer(RobotMap.FRONT_LIFTER_POT_CH);
+    // rearLifterPot = new AnalogPotentiometer(RobotMap.REAR_LIFTER_POT_CH);
+    
+    // // create pidcontroller
+    // frontLifterPID = new PIDController(0, 0, 0, frontLifterPot, frontLifter);
+    // rearLifterPID = new PIDController(0, 0, 0, rearLifterPot, rearLifter);
+
+    // // create PID coefficients
+    // kP = 0.1;
+    // kI = 1e-4;
+    // kD = 150;
+    // kF = 0;
+    // kMaxOutput = 0.2;
+    // kMinOutput = -0.2;
+
+    // // set PID coefficients
+    //   //Front Lifter PID
+    //   frontLifterPID.setP(kP);
+    //   frontLifterPID.setI(kI);
+    //   frontLifterPID.setD(kD);
+    //   frontLifterPID.setF(kF);
+    //   frontLifterPID.setInputRange(kMinOutput, kMaxOutput);
+    //   //Rear Lifter PID
+    //   rearLifterPID.setP(kP);
+    //   rearLifterPID.setI(kI);
+    //   rearLifterPID.setD(kD);
+    //   rearLifterPID.setF(kF);
+    //   rearLifterPID.setInputRange(kMinOutput, kMaxOutput);
+
+    // send to SmartDashboard
+
     // set lifter motors (see RobotMap for IDs)
     frontLifter = new WPI_VictorSPX(RobotMap.FRONT_LIFTER_CH);
     rearLifter = new WPI_VictorSPX(RobotMap.REAR_LIFTER_CH);
     lifterDrive = new WPI_VictorSPX(RobotMap.LIFTER_DRIVE_CH);
-    
-    // create lifter potentionmetrs
-    frontLifterPot = new AnalogPotentiometer(RobotMap.FRONT_LIFTER_POT_CH);
-    rearLifterPot = new AnalogPotentiometer(RobotMap.REAR_LIFTER_POT_CH);
-
-    // create pidcontroller
-    frontLifterPID = new PIDController(0, 0, 0, frontLifterPot, frontLifter);
-    rearLifterPID = new PIDController(0, 0, 0, rearLifterPot, rearLifter);
-
-    // create PID coefficients
-    kP = 0.1;
-    kI = 1e-4;
-    kD = 150;
-    kMaxOutput = 0.2;
-    kMinOutput = -0.2;
-
-    // set PID coefficients
-    // Front Lifter PID
-    frontLifterPID.setP(kP);
-    frontLifterPID.setI(kI);
-    frontLifterPID.setD(kD);
-    frontLifterPID.setInputRange(kMinOutput, kMaxOutput);
-    // Rear Lifter PID
-    rearLifterPID.setP(kP);
-    rearLifterPID.setI(kI);
-    rearLifterPID.setD(kD);
-    rearLifterPID.setInputRange(kMinOutput, kMaxOutput);
-
-    // send to SmartDashboard
-    SmartDashboard.putData(frontLifterPot);
-    SmartDashboard.putData(rearLifterPot);
-    SmartDashboard.putData(frontLifterPID);
-    SmartDashboard.putData(rearLifterPID);
 
     // set lifter limits (see RobotMap for IDs)
     frontLimitTop = new DigitalInput(RobotMap.FRONT_LIMIT_TOP_CH);

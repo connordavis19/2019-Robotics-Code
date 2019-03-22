@@ -34,9 +34,11 @@ public class RobotMap {
   public static int ELEVATOR_POT_CH = 2;
 
   // Create constants for herder motors
-  public static int HERDER_BOTTOM_COLLECTOR_CHANNEL = 22; // TODO: set to 12
-  public static int HERDER_TOP_COLLECTOR_CHANNEL = 7;
+  public static int HERDER_BOTTOM_COLLECTOR_CHANNEL = 7; // TODO: set to 12
+  public static int HERDER_TOP_COLLECTOR_CHANNEL = 8;
   public static int HERDER_MOTOR_CHANNEL = 12; // TODO: set to 8
+  public static int BUFFALO_NOSE_FWD = 2;
+  public static int BUFFALO_NOSE_BWD = 3;
 
   // Create constants for servo PWM location
   public static int TRAVERSE_SERVO_CHANNEL = 4;

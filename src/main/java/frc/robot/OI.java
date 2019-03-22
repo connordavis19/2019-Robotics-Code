@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.BuffaloNoseInCom;
+import frc.robot.commands.BuffaloNoseOutCom;
 import frc.robot.commands.ElevatorDownCom;
 import frc.robot.commands.ElevatorUpCom;
 import frc.robot.commands.HerderCollect;
@@ -32,6 +34,8 @@ public class OI {
   private Joystick elevatorStick;
   private JoystickButton elevatorUpButton;
   private JoystickButton elevatorDownButton;
+  private JoystickButton buffaloNoseIn;
+  private JoystickButton buffaloNoseOut;
 
   private JoystickButton rearLiftersUpButton, rearLiftersDownButton, frontLiftersUpButton, frontLiftersDownButton,
       liftersUp, liftersDown, lifterDrive, lifterStick, collect, dispense, herderUpButton, herderDownButton;
@@ -76,8 +80,17 @@ public class OI {
     dispense = new JoystickButton(elevatorStick, 6);
     herderUpButton = new JoystickButton(elevatorStick, 4);
     herderDownButton = new JoystickButton(elevatorStick, 2);
+
+
+    buffaloNoseIn = new JoystickButton(elevatorStick, 9);
+    buffaloNoseOut = new JoystickButton(elevatorStick, 10);
+    buffaloNoseIn.whileHeld(new BuffaloNoseInCom());
+    buffaloNoseOut.whileHeld(new BuffaloNoseOutCom());
+
     collect.whileHeld(new HerderCollect());
     dispense.whileHeld(new HerderDispense());
+
+
     herderUpButton.whileHeld(new HerderUpCom());
     herderDownButton.whileHeld(new HerderDownCom());
 

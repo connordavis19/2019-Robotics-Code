@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   public static HerderSub secondHerderSub;
   public static OI oi;
   public static ServoSub servoSub;
+  public static CameraSub cameraSub;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
     lifterSub = new LifterSub();
     herderSub = new HerderSub();
     servoSub = new ServoSub();
+    cameraSub = new CameraSub();
     oi = new OI();
 
     m_chooser.setDefaultOption("Default Auto", new MecanumDriveCom());

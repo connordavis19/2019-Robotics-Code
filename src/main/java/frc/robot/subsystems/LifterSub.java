@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,8 +22,8 @@ import frc.robot.commands.*;
  */
 public class LifterSub extends Subsystem {
 
-  private AnalogPotentiometer frontLifterPot;
-  private AnalogPotentiometer rearLifterPot;
+  private AnalogInput frontLifterPot;
+  private AnalogInput rearLifterPot;
 
   private PIDController frontLifterPID;
   private PIDController rearLifterPID;
@@ -39,17 +39,17 @@ public class LifterSub extends Subsystem {
     lifterDrive = new WPI_VictorSPX(RobotMap.LIFTER_DRIVE_CH);
 
     // create lifter potentionmetrs
-    frontLifterPot = new AnalogPotentiometer(RobotMap.FRONT_LIFTER_POT_CH);
-    rearLifterPot = new AnalogPotentiometer(RobotMap.REAR_LIFTER_POT_CH);
+    frontLifterPot = new AnalogInput(RobotMap.FRONT_LIFTER_POT_CH);
+    rearLifterPot = new AnalogInput(RobotMap.REAR_LIFTER_POT_CH);
 
     // create pidcontroller
     frontLifterPID = new PIDController(0, 0, 0, frontLifterPot, frontLifter);
     rearLifterPID = new PIDController(0, 0, 0, rearLifterPot, rearLifter);
 
     // create PID coefficients
-    kP = 0.1;
-    kI = 1e-4;
-    kD = 150;
+    kP = 0.3;
+    kI = 0;
+    kD = 0;
     kMaxOutput = 0.2;
     kMinOutput = -0.2;
 
@@ -58,12 +58,12 @@ public class LifterSub extends Subsystem {
     frontLifterPID.setP(kP);
     frontLifterPID.setI(kI);
     frontLifterPID.setD(kD);
-    frontLifterPID.setInputRange(kMinOutput, kMaxOutput);
+    frontLifterPID.setOutputRange(kMinOutput, kMaxOutput);
     // Rear Lifter PID
     rearLifterPID.setP(kP);
     rearLifterPID.setI(kI);
     rearLifterPID.setD(kD);
-    rearLifterPID.setInputRange(kMinOutput, kMaxOutput);
+    rearLifterPID.setOutputRange(kMinOutput, kMaxOutput);
 
     // send to SmartDashboard
     SmartDashboard.putData(frontLifterPot);
@@ -89,7 +89,7 @@ public class LifterSub extends Subsystem {
   }
 
   public double getFrontLifterPot() {
-    return frontLifterPot.get();
+    return frontLifterPot.getVoltage();
   }
 
   public void setFrontLifterPID(double setPoint) {
@@ -97,7 +97,7 @@ public class LifterSub extends Subsystem {
   }
 
   public double getRearLifterPot() {
-    return rearLifterPot.get();
+    return rearLifterPot.getVoltage();
   }
 
   public void setRearLifterPID(double setPoint) {

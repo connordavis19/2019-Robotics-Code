@@ -77,8 +77,8 @@ public class OI {
     herderDownButton = new JoystickButton(elevatorStick, 2);
 
 
-    buffaloNoseIn = new JoystickButton(elevatorStick, 9);
-    buffaloNoseOut = new JoystickButton(elevatorStick, 10);
+    // buffaloNoseIn = new JoystickButton(elevatorStick, 9);
+    // buffaloNoseOut = new JoystickButton(elevatorStick, 10);
     buffaloNoseIn.whileHeld(new BuffaloNoseInCom());
     buffaloNoseOut.whileHeld(new BuffaloNoseOutCom());
 

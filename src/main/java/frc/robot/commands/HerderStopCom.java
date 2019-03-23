@@ -14,12 +14,13 @@ public class HerderStopCom extends Command {
   public HerderStopCom() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.herderSub);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.herderSub.herderStop();
+    // Robot.herderSub.herderStop();
   }
 
   // Called repeatedly when this Command is scheduled to run

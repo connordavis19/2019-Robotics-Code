@@ -189,6 +189,6 @@ public class LifterSub extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new LifterStick());
-    setDefaultCommand(new RearLifterSlaveAndDriveCom());
+    //setDefaultCommand(new RearLifterSlaveAndDriveCom());
   }
 }

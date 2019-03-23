@@ -30,7 +30,8 @@ public class OI {
   private JoystickButton rearLiftersUpButton, rearLiftersDownButton, frontLiftersUpButton, frontLiftersDownButton,
       liftersUp, liftersDown, lifterDrive, lifterStick, collect, dispense, herderUpButton, herderDownButton;
 
-  private JoystickButton pidButton;
+  private JoystickButton herderArmInButton;
+  private JoystickButton herderArmOutButton;
 
   private JoystickButton frontLifterPID, rearLifterPID;
 
@@ -84,13 +85,12 @@ public class OI {
     collect.whileHeld(new HerderCollect());
     dispense.whileHeld(new HerderDispense());
 
-
-    herderUpButton.whileHeld(new HerderUpCom());
-    herderDownButton.whileHeld(new HerderDownCom());
-
     // PID Controls (Using Elevator Joystick)
-    pidButton = new JoystickButton(elevatorStick, 8);
-    pidButton.toggleWhenPressed(new HerderPIDCommand());
+    herderArmInButton = new JoystickButton(elevatorStick, RobotMap.HERDER_ARM_IN_BTN);
+    herderArmInButton.whenPressed(new HerderArmInCom());
+
+    herderArmOutButton = new JoystickButton(elevatorStick, RobotMap.HERDER_ARM_OUT_BTN);
+    herderArmOutButton.whenPressed(new HerderArmOutCom());
   }
 
   public double getX() {

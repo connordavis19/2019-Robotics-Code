@@ -14,6 +14,7 @@ public class HerderStopCollect extends Command {
   public HerderStopCollect() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.herderSub);
   }
 
   // Called just before this Command runs the first time

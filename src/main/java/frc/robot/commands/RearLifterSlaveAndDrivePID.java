@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package main.java.frc.robot.commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.*;
 
-public class LifterPIDCom extends Command {
-    public LifterPIDCom() {
+public class RearLifterSlaveAndDrivePID extends Command {
+    public RearLifterSlaveAndDrivePID() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.lifterSub);
   }

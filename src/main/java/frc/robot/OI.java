@@ -79,18 +79,18 @@ public class OI {
 
     // buffaloNoseIn = new JoystickButton(elevatorStick, 9);
     // buffaloNoseOut = new JoystickButton(elevatorStick, 10);
-    buffaloNoseIn.whileHeld(new BuffaloNoseInCom());
-    buffaloNoseOut.whileHeld(new BuffaloNoseOutCom());
+    // buffaloNoseIn.whileHeld(new BuffaloNoseInCom());
+    // buffaloNoseOut.whileHeld(new BuffaloNoseOutCom());
 
     collect.whileHeld(new HerderCollect());
     dispense.whileHeld(new HerderDispense());
 
     // PID Controls (Using Elevator Joystick)
     herderArmInButton = new JoystickButton(elevatorStick, RobotMap.HERDER_ARM_IN_BTN);
-    herderArmInButton.whenPressed(new HerderArmInCom());
+    herderArmInButton.whenPressed(new TestHerderArmInCom());
 
     herderArmOutButton = new JoystickButton(elevatorStick, RobotMap.HERDER_ARM_OUT_BTN);
-    herderArmOutButton.whenPressed(new HerderArmOutCom());
+    herderArmOutButton.whenPressed(new TestHerderArmOutCom());
   }
 
   public double getX() {

@@ -105,7 +105,7 @@ public class OI {
     frontLiftUpButton.whileHeld(new FrontLifterUpCom());
 
     rearLiftUpButton = new JoystickButton(elevatorStick, RobotMap.REAR_LIFT_UP_BUTTON_CH);
-    rearLiftUpButton.whileHeld(new RearLifterUpCom());
+    rearLiftUpButton.whileHeld(new RearLifterUpCom()); 
 
     //This code should be updated to require both buttons to be pressed to lower lifters
     bothLiftersDownButton1 = new JoystickButton(elevatorStick, RobotMap.BOTH_LIFTERS_DOWN_BUTTON_CH_1);

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.LifterCommands.LifterSlavePIDCom;
+import frc.robot.commands.LifterCommands.StopLifterMotorsCom;
 
 /**
  * Add your docs here.
@@ -73,8 +73,8 @@ public class LifterSub extends Subsystem {
     kP = 0.3;
     kI = 0;
     kD = 0;
-    kMaxOutput = 0.2;
-    kMinOutput = -0.2;
+    kMaxOutput = 0.5;
+    kMinOutput = -0.5;
 
     // set PID coefficients
     // Front Lifter PID
@@ -140,7 +140,7 @@ public class LifterSub extends Subsystem {
     double frontLiftPotValue = getFrontLiftPot();
     boolean frontTopLimitValue = getFrontLiftTopLimit();
 
-    if (frontLiftPotValue < 3.5 && frontTopLimitValue == true) {
+    if (frontLiftPotValue < 3.6 && frontTopLimitValue == true) {
       frontLifterMotor.set(-.5);
     }
 
@@ -156,7 +156,7 @@ public class LifterSub extends Subsystem {
     double rearLiftPotValue = getRearLiftPot();
     boolean rearTopLimitValue = getRearLiftTopLimit();
 
-    if (rearLiftPotValue < 3.5 && rearTopLimitValue == true) {
+    if (rearLiftPotValue < 3.6 && rearTopLimitValue == true) {
       rearLifterMotor.set(-.5);
     }
 
@@ -176,15 +176,15 @@ public class LifterSub extends Subsystem {
 
     
     //When front bottom limit is online add to this statement
-    if (frontLiftPotValue > 1.2 && rearLiftPotValue > 1.2) {
+    if (frontLiftPotValue > 0.8 && rearLiftPotValue > 0.9) {
 
-      if (frontLiftPotValue < rearLiftPotValue) {
-        frontLifterMotor.set(.4);
-        rearLifterMotor.set(.6);
+      if (frontLiftPotValue < rearLiftPotValue - .075) {
+        frontLifterMotor.set(.5);
+        rearLifterMotor.set(.7);
       }
 
       else {
-        frontLifterMotor.set(.5);
+        frontLifterMotor.set(.7);
         rearLifterMotor.set(.5);
       }
 
@@ -232,7 +232,6 @@ public class LifterSub extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new StopLifterMotorsCom());
-    setDefaultCommand(new LifterSlavePIDCom());
+    setDefaultCommand(new StopLifterMotorsCom());
   }
 }

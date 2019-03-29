@@ -17,7 +17,6 @@ import frc.robot.commands.HerderCommands.HerderStopCollect;
  * Add your docs here.
  */
 public class HerderSub extends Subsystem {
-
  
   private WPI_VictorSPX herderCollectorTop;
   private WPI_VictorSPX herderCollectorBottom;

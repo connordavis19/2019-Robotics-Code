@@ -30,15 +30,20 @@ public class LifterSub extends Subsystem {
   private AnalogInput frontLiftPot;
   private DigitalInput frontTopLiftLimit;
   private DigitalInput frontBottomLiftLimit;
+  private PIDController frontLifterPID;
 
   // rear lifter
   private WPI_VictorSPX rearLifterMotor;
   private AnalogInput rearLiftPot;
   private DigitalInput rearTopLiftLimit;
   private DigitalInput rearBottomLiftLimit;
+  private PIDController rearLifterPID;
 
   // lift drive motor
   private WPI_VictorSPX liftDriveMotor;
+
+  // pid coefficients
+  private double kP, kI, kD, kMaxOutput, kMinOutput;
 
   // The constructor for the
   // subsystem---------------------------------------------------------------------------
@@ -61,6 +66,28 @@ public class LifterSub extends Subsystem {
     // Lift driver motor
     liftDriveMotor = new WPI_VictorSPX(RobotMap.LIFT_DRIVE_MOTOR_CH);
 
+    // create pidcontroller
+    frontLifterPID = new PIDController(0, 0, 0, frontLiftPot, frontLifterMotor);
+    rearLifterPID = new PIDController(0, 0, 0, rearLiftPot, rearLifterMotor);
+
+    // create PID coefficients
+    kP = 0.3;
+    kI = 0;
+    kD = 0;
+    kMaxOutput = 0.2;
+    kMinOutput = -0.2;
+
+    // set PID coefficients
+    // Front Lifter PID
+    frontLifterPID.setP(kP);
+    frontLifterPID.setI(kI);
+    frontLifterPID.setD(kD);
+    frontLifterPID.setOutputRange(kMinOutput, kMaxOutput);
+    // Rear Lifter PID
+    rearLifterPID.setP(kP);
+    rearLifterPID.setI(kI);
+    rearLifterPID.setD(kD);
+    rearLifterPID.setOutputRange(kMinOutput, kMaxOutput);
   }
 
   // end of constructor--------------------------------------------------------

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.HerderArmInCom;
+import frc.robot.commands.TestHerderArmStopCom;
 
 /**
  * Add your docs here.
@@ -114,13 +115,22 @@ public class HerderArmSub extends Subsystem {
     herderArmPID.setSetpoint(voltage);
     SmartDashboard.putNumber("SetPoint", voltage);
   }
- 
 
+  public void armIn() {
+    herderArmMotor.set(0.25);
+  }
 
+  public void armOut() {
+    herderArmMotor.set(-0.25);
+  }
+
+  public void armStop() {
+    herderArmMotor.set(0);
+  }
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new HerderArmInCom());
-
+    // setDefaultCommand(new HerderArmInCom());
+    setDefaultCommand(new TestHerderArmStopCom());
   }
 }

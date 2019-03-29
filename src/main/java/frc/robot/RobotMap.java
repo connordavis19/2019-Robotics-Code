@@ -69,5 +69,5 @@ public class RobotMap {
   public static int ELEVATOR_STICK_CH = 1;
 
   // Create constant for deadband
-  public static double DEADBAND_CH = 0.05;
+  public static double DEADBAND_CH = 0.1;
 }

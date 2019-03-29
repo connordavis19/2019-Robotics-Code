@@ -36,8 +36,12 @@ public class OI {
   private JoystickButton frontLifterPID, rearLifterPID;
 
   private double xSpeed;
+  private double xjoy;
   private double ySpeed;
+  private double yjoy;
   private double zRotation;
+  private double zjoy;
+  private int throttleCurve = 10;
 
   private DigitalInput leftEye;
   private DigitalInput mideEye;
@@ -69,8 +73,8 @@ public class OI {
     // rearLiftersDownButton.whileHeld(new RearLifterDownCom());
     // frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
     // Herder Controls
-    frontLiftersUpButton = new JoystickButton(elevatorStick, 9);
-    frontLiftersDownButton = new JoystickButton(elevatorStick, 10);
+    // frontLiftersUpButton = new JoystickButton(elevatorStick, );
+    // frontLiftersDownButton = new JoystickButton(elevatorStick, 10);
     collect = new JoystickButton(elevatorStick, 5);
     dispense = new JoystickButton(elevatorStick, 6);
     herderUpButton = new JoystickButton(elevatorStick, 4);
@@ -93,15 +97,23 @@ public class OI {
     herderArmOutButton.whenPressed(new HerderArmOutCom());
   }
 
+  //Added an exponential curve to the drive throttle between 0 and 1
+  //Higher throttleCurve > steeper, smaller throttleCurve > shallower     -Andrew 
   public double getX() {
+    // xjoy = driveStick.getRawAxis(1);
+    // return (-xjoy*(1/throttleCurve)*Math.pow(throttleCurve, -xjoy));
     return -driveStick.getRawAxis(1);
   }
 
   public double getY() {
+    // yjoy = driveStick.getRawAxis(0);
+    // return (yjoy*(1/throttleCurve)*Math.pow(throttleCurve, yjoy));
     return driveStick.getRawAxis(0);
   }
 
   public double getTwist() {
+    // zjoy = driveStick.getRawAxis(2);
+    // return (zjoy*(1/throttleCurve)*Math.pow(throttleCurve, zjoy));
     return driveStick.getRawAxis(2);
   }
 

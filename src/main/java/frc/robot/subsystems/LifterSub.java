@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.*;
-import frc.robot.commands.LifterCommands.StopLifterMotorsCom;
+import frc.robot.commands.LifterCommands.LifterSlavePIDCom;
 
 /**
  * Add your docs here.
@@ -30,14 +29,14 @@ public class LifterSub extends Subsystem {
   private AnalogInput frontLiftPot;
   private DigitalInput frontTopLiftLimit;
   private DigitalInput frontBottomLiftLimit;
-  private PIDController frontLifterPID;
+  private PIDController frontLiftPID;
 
   // rear lifter
   private WPI_VictorSPX rearLifterMotor;
   private AnalogInput rearLiftPot;
   private DigitalInput rearTopLiftLimit;
   private DigitalInput rearBottomLiftLimit;
-  private PIDController rearLifterPID;
+  private PIDController rearLiftPID;
 
   // lift drive motor
   private WPI_VictorSPX liftDriveMotor;
@@ -67,8 +66,8 @@ public class LifterSub extends Subsystem {
     liftDriveMotor = new WPI_VictorSPX(RobotMap.LIFT_DRIVE_MOTOR_CH);
 
     // create pidcontroller
-    frontLifterPID = new PIDController(0, 0, 0, frontLiftPot, frontLifterMotor);
-    rearLifterPID = new PIDController(0, 0, 0, rearLiftPot, rearLifterMotor);
+    frontLiftPID = new PIDController(0, 0, 0, frontLiftPot, frontLifterMotor);
+    rearLiftPID = new PIDController(0, 0, 0, rearLiftPot, rearLifterMotor);
 
     // create PID coefficients
     kP = 0.3;
@@ -79,15 +78,15 @@ public class LifterSub extends Subsystem {
 
     // set PID coefficients
     // Front Lifter PID
-    frontLifterPID.setP(kP);
-    frontLifterPID.setI(kI);
-    frontLifterPID.setD(kD);
-    frontLifterPID.setOutputRange(kMinOutput, kMaxOutput);
+    frontLiftPID.setP(kP);
+    frontLiftPID.setI(kI);
+    frontLiftPID.setD(kD);
+    frontLiftPID.setOutputRange(kMinOutput, kMaxOutput);
     // Rear Lifter PID
-    rearLifterPID.setP(kP);
-    rearLifterPID.setI(kI);
-    rearLifterPID.setD(kD);
-    rearLifterPID.setOutputRange(kMinOutput, kMaxOutput);
+    rearLiftPID.setP(kP);
+    rearLiftPID.setI(kI);
+    rearLiftPID.setD(kD);
+    rearLiftPID.setOutputRange(kMinOutput, kMaxOutput);
   }
 
   // end of constructor--------------------------------------------------------
@@ -218,11 +217,22 @@ public class LifterSub extends Subsystem {
     liftDriveMotor.set(0);
   }
 
+  // PID setpoint methods ---------------------------------------------------
+
+  public void setFrontLifterPID(double setPoint) {
+    frontLiftPID.setSetpoint(setPoint);
+  }
+
+  public void setRearLifterPID(double setPoint) {
+    rearLiftPID.setSetpoint(setPoint);
+  }
+
   // This method sets the default command to stop motors- this causes motors to
   // default to stop during normal robot operation
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new StopLifterMotorsCom());
+    // setDefaultCommand(new StopLifterMotorsCom());
+    setDefaultCommand(new LifterSlavePIDCom());
   }
 }

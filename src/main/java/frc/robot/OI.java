@@ -97,8 +97,9 @@ public class OI {
     lifterDriveReverseButton = new JoystickButton(driveStick, RobotMap.LIFTER_DRIVE_REVERSE_BUTTON_CH);
     lifterDriveReverseButton.whileHeld(new LifterDriveReverseCom());
 
-    frontPinShift = new JoystickButton(driveStick, RobotMap.FRONT_LIFTER_PINS_SHIFT_BTTN_CH);
-    frontPinShift.toggleWhenPressed(new FrontPinOutCom());
+    // frontPinShift = new JoystickButton(driveStick, RobotMap.FRONT_LIFTER_PINS_SHIFT_BTTN_CH);
+    // frontPinShift.toggleWhenPressed(new FrontPinOutCom());
+
     rearPinShift = new JoystickButton(driveStick, RobotMap.REAR_LIFTER_PINS_SHIFT_BTTN_CH);
     rearPinShift.toggleWhenPressed(new RearPinOutCom());
 

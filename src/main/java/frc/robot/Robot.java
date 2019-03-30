@@ -28,11 +28,12 @@ public class Robot extends TimedRobot {
   public static BuffaloNoseSub buffaloNoseSub;
   public static ElevatorSub elevatorSub;
   public static LifterSub lifterSub;
+  public static LifterPinSub lifterPinSub;
   public static HerderSub herderSub;
   public static HerderArmSub herderArmSub;
-  public static OI oi;
   public static ServoSub servoSub;
   public static CameraSub cameraSub;
+  public static OI oi;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -47,6 +48,7 @@ public class Robot extends TimedRobot {
     buffaloNoseSub = new BuffaloNoseSub();
     elevatorSub = new ElevatorSub();
     lifterSub = new LifterSub();
+    lifterPinSub = new LifterPinSub();
     herderSub = new HerderSub();
     herderArmSub = new HerderArmSub();
     servoSub = new ServoSub();
@@ -73,6 +75,8 @@ public class Robot extends TimedRobot {
     Robot.lifterSub.getAllLiftSensors();
     Robot.elevatorSub.getTopLimit();
     Robot.elevatorSub.getBottomLimit();
+
+    Robot.cameraSub.getLimelight();
   }
 
   /**

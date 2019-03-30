@@ -21,9 +21,11 @@ import frc.robot.commands.HerderCommands.TestHerderArmInCom;
 import frc.robot.commands.HerderCommands.TestHerderArmOutCom;
 import frc.robot.commands.LifterCommands.BothLiftersDownCom;
 import frc.robot.commands.LifterCommands.FrontLifterUpCom;
+import frc.robot.commands.LifterCommands.FrontPinOutCom;
 import frc.robot.commands.LifterCommands.LifterDriveForwardCom;
 import frc.robot.commands.LifterCommands.LifterDriveReverseCom;
 import frc.robot.commands.LifterCommands.RearLifterUpCom;
+import frc.robot.commands.LifterCommands.RearPinOutCom;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,6 +47,9 @@ public class OI {
   private JoystickButton elevatorDownButton;
 
   private JoystickButton buffaloNoseShift;
+
+  private JoystickButton frontPinShift;
+  private JoystickButton rearPinShift;
 
   private JoystickButton collect, dispense;
 
@@ -70,7 +75,19 @@ public class OI {
 
     // Drive Joystick--------------------------------------------------------
     driveStick = new Joystick(RobotMap.DRIVE_STICK_CH);
+    // Lifter code-------------------------------------------------
 
+    frontLiftUpButton = new JoystickButton(driveStick, RobotMap.FRONT_LIFT_UP_BUTTON_CH);
+    frontLiftUpButton.whileHeld(new FrontLifterUpCom());
+
+    rearLiftUpButton = new JoystickButton(driveStick, RobotMap.REAR_LIFT_UP_BUTTON_CH);
+    rearLiftUpButton.whileHeld(new RearLifterUpCom()); 
+
+    //This code should be updated to require both buttons to be pressed to lower lifters
+    bothLiftersDownButton1 = new JoystickButton(driveStick, RobotMap.BOTH_LIFTERS_DOWN_BUTTON_CH_1);
+    bothLiftersDownButton1.whileHeld(new BothLiftersDownCom());
+    bothLiftersDownButton2 = new JoystickButton(driveStick, RobotMap.BOTH_LIFTERS_DOWN_BUTTON_CH_2);
+    
     shiftButton = new JoystickButton(driveStick, RobotMap.SHIFT_BUTTON_CH);
     shiftButton.toggleWhenPressed(new MecanumDriveCom());
 
@@ -80,9 +97,12 @@ public class OI {
     lifterDriveReverseButton = new JoystickButton(driveStick, RobotMap.LIFTER_DRIVE_REVERSE_BUTTON_CH);
     lifterDriveReverseButton.whileHeld(new LifterDriveReverseCom());
 
-     // buffalo nose code---------------------------------------------
-     buffaloNoseShift = new JoystickButton(driveStick, RobotMap.BUFFALO_NOSE_SHIFT_BTN_CH);
-     buffaloNoseShift.toggleWhenPressed(new BuffaloNoseOutCom());
+    frontPinShift = new JoystickButton(driveStick, RobotMap.FRONT_LIFTER_PINS_SHIFT_BTTN_CH);
+    frontPinShift.toggleWhenPressed(new FrontPinOutCom());
+    rearPinShift = new JoystickButton(driveStick, RobotMap.REAR_LIFTER_PINS_SHIFT_BTTN_CH);
+    rearPinShift.toggleWhenPressed(new RearPinOutCom());
+
+     
 
     // End Drive joystick-----------------------------------------------------
 
@@ -92,6 +112,10 @@ public class OI {
 
     elevatorStick = new Joystick(RobotMap.ELEVATOR_STICK_CH);
 
+    // buffalo nose code---------------------------------------------
+    buffaloNoseShift = new JoystickButton(elevatorStick, RobotMap.BUFFALO_NOSE_SHIFT_BTN_CH);
+    buffaloNoseShift.toggleWhenPressed(new BuffaloNoseOutCom());
+
     // Elevator Code
     elevatorUpButton = new JoystickButton(elevatorStick, RobotMap.ELEVATOR_UP_BTN_CH);
     elevatorUpButton.whileHeld(new ElevatorUpCom());
@@ -99,18 +123,6 @@ public class OI {
     elevatorDownButton = new JoystickButton(elevatorStick, RobotMap.ELEVATOR_DOWN_BTN_CH);
     elevatorDownButton.whileHeld(new ElevatorDownCom());
 
-    // Lifter code-------------------------------------------------
-
-    frontLiftUpButton = new JoystickButton(elevatorStick, RobotMap.FRONT_LIFT_UP_BUTTON_CH);
-    frontLiftUpButton.whileHeld(new FrontLifterUpCom());
-
-    rearLiftUpButton = new JoystickButton(elevatorStick, RobotMap.REAR_LIFT_UP_BUTTON_CH);
-    rearLiftUpButton.whileHeld(new RearLifterUpCom()); 
-
-    //This code should be updated to require both buttons to be pressed to lower lifters
-    bothLiftersDownButton1 = new JoystickButton(elevatorStick, RobotMap.BOTH_LIFTERS_DOWN_BUTTON_CH_1);
-    bothLiftersDownButton1.whileHeld(new BothLiftersDownCom());
-    bothLiftersDownButton2 = new JoystickButton(elevatorStick, RobotMap.BOTH_LIFTERS_DOWN_BUTTON_CH_2);
   
 
     // Herder code--------------------------------------------------
@@ -137,7 +149,7 @@ public class OI {
   public double getX() {
     // return ((-driveStick.getRawAxis(1))*1/throttleCurve*Math.pow(throttleCurve,
     // (-driveStick.getRawAxis(1))));
-    return -driveStick.getRawAxis(1);
+    return (-driveStick.getRawAxis(1)) * 0.8;
   }
 
   public double getY() {
@@ -149,7 +161,7 @@ public class OI {
   public double getTwist() {
     // return ((driveStick.getRawAxis(2))*1/throttleCurve*Math.pow(throttleCurve,
     // (driveStick.getRawAxis(2))));
-    return -driveStick.getRawAxis(2);
+    return (-driveStick.getRawAxis(2)) * 0.8;
   }
 
   public double getCameraTwist() {

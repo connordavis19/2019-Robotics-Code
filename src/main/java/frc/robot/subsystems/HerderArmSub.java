@@ -114,7 +114,7 @@ public class HerderArmSub extends Subsystem {
   }
 
   public void armIn() {
-    herderArmMotor.set(0.25);
+    herderArmMotor.set(0.3);
   }
 
   public void armOut() {

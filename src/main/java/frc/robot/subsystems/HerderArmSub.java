@@ -10,14 +10,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.HerderArmInCom;
-import frc.robot.commands.TestHerderArmStopCom;
+import frc.robot.commands.HerderCommands.TestHerderArmStopCom;
 
 /**
  * Add your docs here.
@@ -30,8 +27,7 @@ public class HerderArmSub extends Subsystem {
   private double kP, kI, kD, kIz, kF, kMaxOutput, kMinOutput;
 
   private WPI_VictorSPX herderArmMotor;
-  private WPI_VictorSPX herderCollectorTop;
-  private WPI_VictorSPX herderCollectorBottom;
+ 
 
   public HerderArmSub() {
     // create new AnalogInput (potentiometer)
@@ -39,18 +35,19 @@ public class HerderArmSub extends Subsystem {
 
     // create herder motor (VictorSPX)
     herderArmMotor = new WPI_VictorSPX(RobotMap.HERDER_ARM_MOTOR_CHANNEL);
+    
 
     // create pidcontroller
     herderArmPID = new PIDController(kP, kI, kD, herderPot, herderArmMotor);
-    herderArmPID.enable();
+    //herderArmPID.enable();
 
     // create PID coefficients
     kP = 0.3;
     kI = 0;
     kD = 0;
     kF = 0;
-    kMaxOutput = 0.2;
-    kMinOutput = -0.2;
+    kMaxOutput = 0.4;
+    kMinOutput = -0.4;
 
     // set PID coefficients
     herderArmPID.setP(kP);
@@ -117,7 +114,7 @@ public class HerderArmSub extends Subsystem {
   }
 
   public void armIn() {
-    herderArmMotor.set(0.25);
+    herderArmMotor.set(0.3);
   }
 
   public void armOut() {
@@ -130,7 +127,11 @@ public class HerderArmSub extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    
+    //Use this command for PID arm control
     // setDefaultCommand(new HerderArmInCom());
+
+    //Use this command for manual arm control
     setDefaultCommand(new TestHerderArmStopCom());
   }
 }

@@ -5,13 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.HerderCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class BuffaloNoseOutCom extends Command {
-  public BuffaloNoseOutCom() {
+public class HerderDispense extends Command {
+  public HerderDispense() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.herderSub);
@@ -20,12 +20,13 @@ public class BuffaloNoseOutCom extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.herderSub.dispense();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.herderSub.buffaloNoseOut();
+    Robot.herderSub.dispense();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,11 +38,13 @@ public class BuffaloNoseOutCom extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.herderSub.herderCollectStop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

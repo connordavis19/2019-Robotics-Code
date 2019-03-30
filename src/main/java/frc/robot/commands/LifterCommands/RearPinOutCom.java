@@ -5,15 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.LifterCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class LifterPIDCom extends Command {
-    public LifterPIDCom() {
+public class RearPinOutCom extends Command {
+  public RearPinOutCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.lifterSub);
+    // eg. requires(chassis);
+    requires(Robot.lifterPinSub);
   }
 
   // Called just before this Command runs the first time
@@ -24,14 +25,13 @@ public class LifterPIDCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.setFrontLifterPID(0); // TODO: find a midpoint to use to test if it can hold the herder in position
-    Robot.lifterSub.setRearLifterPID(0);
+    Robot.lifterPinSub.rearPinsOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false; //!Robot.lifterSub.getRearBottomLimit() && !Robot.lifterSub.getFrontBottomLimit(); // limit switch code in LifterSub (so they will stop independantly)
+    return false;
   }
 
   // Called once after isFinished returns true

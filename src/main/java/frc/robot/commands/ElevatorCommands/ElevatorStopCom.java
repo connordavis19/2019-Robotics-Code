@@ -5,15 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.ElevatorCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class TestHerderArmStopCom extends Command {
-    public TestHerderArmStopCom() {
+public class ElevatorStopCom extends Command {
+  public ElevatorStopCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.herderArmSub);
+    requires(Robot.elevatorSub);
   }
 
   // Called just before this Command runs the first time
@@ -24,7 +24,8 @@ public class TestHerderArmStopCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.herderArmSub.armStop();
+    Robot.elevatorSub.getElevatorLimits();
+    Robot.elevatorSub.elevatorStop();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +37,7 @@ public class TestHerderArmStopCom extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.herderArmSub.armStop();
+    
   }
 
   // Called when another command which requires one or more of the same

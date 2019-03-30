@@ -11,6 +11,21 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.*;
+import frc.robot.commands.BuffaloCommands.BuffaloNoseOutCom;
+import frc.robot.commands.DriveTrainCommands.MecanumDriveCom;
+import frc.robot.commands.ElevatorCommands.ElevatorDownCom;
+import frc.robot.commands.ElevatorCommands.ElevatorUpCom;
+import frc.robot.commands.HerderCommands.HerderCollect;
+import frc.robot.commands.HerderCommands.HerderDispense;
+import frc.robot.commands.HerderCommands.TestHerderArmInCom;
+import frc.robot.commands.HerderCommands.TestHerderArmOutCom;
+import frc.robot.commands.LifterCommands.BothLiftersDownCom;
+import frc.robot.commands.LifterCommands.FrontLifterUpCom;
+import frc.robot.commands.LifterCommands.FrontPinOutCom;
+import frc.robot.commands.LifterCommands.LifterDriveForwardCom;
+import frc.robot.commands.LifterCommands.LifterDriveReverseCom;
+import frc.robot.commands.LifterCommands.RearLifterUpCom;
+import frc.robot.commands.LifterCommands.RearPinOutCom;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,29 +33,38 @@ import frc.robot.commands.*;
  */
 public class OI {
 
+  // Declare driver stick and buttons
   private Joystick driveStick;
-  private JoystickButton shiftButton;
 
+  private JoystickButton shiftButton;
+  private JoystickButton lifterDriveForwardButton;
+  private JoystickButton lifterDriveReverseButton;
+
+  // Declare elevator stick and buttons
   private Joystick elevatorStick;
+
   private JoystickButton elevatorUpButton;
   private JoystickButton elevatorDownButton;
-  private JoystickButton buffaloNoseIn;
-  private JoystickButton buffaloNoseOut;
 
-  private JoystickButton rearLiftersUpButton, rearLiftersDownButton, frontLiftersUpButton, frontLiftersDownButton,
-      liftersUp, liftersDown, lifterDrive, lifterStick, collect, dispense, herderUpButton, herderDownButton;
+  private JoystickButton buffaloNoseShift;
+
+  private JoystickButton frontPinShift;
+  private JoystickButton rearPinShift;
+
+  private JoystickButton collect, dispense;
+
+  private JoystickButton frontLiftUpButton;
+  private JoystickButton rearLiftUpButton;
+  private JoystickButton bothLiftersDownButton1;
+  // Program so both buttons have to be pressed to drop lifter
+  private JoystickButton bothLiftersDownButton2;
 
   private JoystickButton herderArmInButton;
   private JoystickButton herderArmOutButton;
 
-  private JoystickButton frontLifterPID, rearLifterPID;
-
   private double xSpeed;
-  private double xjoy;
   private double ySpeed;
-  private double yjoy;
   private double zRotation;
-  private double zjoy;
   private int throttleCurve = 10;
 
   private DigitalInput leftEye;
@@ -49,72 +73,95 @@ public class OI {
 
   public OI() {
 
-    // Drive Joystick
+    // Drive Joystick--------------------------------------------------------
     driveStick = new Joystick(RobotMap.DRIVE_STICK_CH);
+    // Lifter code-------------------------------------------------
 
+    frontLiftUpButton = new JoystickButton(driveStick, RobotMap.FRONT_LIFT_UP_BUTTON_CH);
+    frontLiftUpButton.whileHeld(new FrontLifterUpCom());
+
+    rearLiftUpButton = new JoystickButton(driveStick, RobotMap.REAR_LIFT_UP_BUTTON_CH);
+    rearLiftUpButton.whileHeld(new RearLifterUpCom()); 
+
+    //This code should be updated to require both buttons to be pressed to lower lifters
+    bothLiftersDownButton1 = new JoystickButton(driveStick, RobotMap.BOTH_LIFTERS_DOWN_BUTTON_CH_1);
+    bothLiftersDownButton1.whileHeld(new BothLiftersDownCom());
+    bothLiftersDownButton2 = new JoystickButton(driveStick, RobotMap.BOTH_LIFTERS_DOWN_BUTTON_CH_2);
+    
     shiftButton = new JoystickButton(driveStick, RobotMap.SHIFT_BUTTON_CH);
     shiftButton.toggleWhenPressed(new MecanumDriveCom());
 
-    // Elevator Joystick
+    lifterDriveForwardButton = new JoystickButton(driveStick, RobotMap.LIFTER_DRIVE_FORWARD_BUTTON_CH);
+    lifterDriveForwardButton.whileHeld(new LifterDriveForwardCom());
+
+    lifterDriveReverseButton = new JoystickButton(driveStick, RobotMap.LIFTER_DRIVE_REVERSE_BUTTON_CH);
+    lifterDriveReverseButton.whileHeld(new LifterDriveReverseCom());
+
+    frontPinShift = new JoystickButton(driveStick, RobotMap.FRONT_LIFTER_PINS_SHIFT_BTTN_CH);
+    frontPinShift.toggleWhenPressed(new FrontPinOutCom());
+    rearPinShift = new JoystickButton(driveStick, RobotMap.REAR_LIFTER_PINS_SHIFT_BTTN_CH);
+    rearPinShift.toggleWhenPressed(new RearPinOutCom());
+
+     
+
+    // End Drive joystick-----------------------------------------------------
+
+
+
+    // Elevator Joystick ----------------------------------------------------
+
     elevatorStick = new Joystick(RobotMap.ELEVATOR_STICK_CH);
-    elevatorUpButton = new JoystickButton(elevatorStick, 3);
+
+    // buffalo nose code---------------------------------------------
+    buffaloNoseShift = new JoystickButton(elevatorStick, RobotMap.BUFFALO_NOSE_SHIFT_BTN_CH);
+    buffaloNoseShift.toggleWhenPressed(new BuffaloNoseOutCom());
+
+    // Elevator Code
+    elevatorUpButton = new JoystickButton(elevatorStick, RobotMap.ELEVATOR_UP_BTN_CH);
     elevatorUpButton.whileHeld(new ElevatorUpCom());
-    elevatorDownButton = new JoystickButton(elevatorStick, 1);
+
+    elevatorDownButton = new JoystickButton(elevatorStick, RobotMap.ELEVATOR_DOWN_BTN_CH);
     elevatorDownButton.whileHeld(new ElevatorDownCom());
-    // Lifter Controls (Using Elevator Joystick)
-    // rearLiftersDownButton = new JoystickButton(elevatorStick, 2);
-    // frontLiftersDownButton = new JoystickButton(elevatorStick, 22);
-    // liftersUp = new JoystickButton(elevatorStick, 2);
-    // liftersDown = new JoystickButton(elevatorStick, 4);
-    lifterDrive = new JoystickButton(elevatorStick, 7);
-    lifterDrive.whileHeld(new LifterDriveCom());
-    // liftersUp.whileHeld(new LifterUpCom());
-    // liftersDown.whileHeld(new LifterDownCom());
-    // rearLiftersDownButton.whileHeld(new RearLifterDownCom());
-    // frontLiftersDownButton.whileHeld(new FrontLifterDownCom());
-    // Herder Controls
-    // frontLiftersUpButton = new JoystickButton(elevatorStick, );
-    // frontLiftersDownButton = new JoystickButton(elevatorStick, 10);
-    collect = new JoystickButton(elevatorStick, 5);
-    dispense = new JoystickButton(elevatorStick, 6);
-    herderUpButton = new JoystickButton(elevatorStick, 4);
-    herderDownButton = new JoystickButton(elevatorStick, 2);
 
+  
 
-    // buffaloNoseIn = new JoystickButton(elevatorStick, 9);
-    // buffaloNoseOut = new JoystickButton(elevatorStick, 10);
-    // buffaloNoseIn.whileHeld(new BuffaloNoseInCom());
-    // buffaloNoseOut.whileHeld(new BuffaloNoseOutCom());
-
+    // Herder code--------------------------------------------------
+    collect = new JoystickButton(elevatorStick, RobotMap.HERDER_COLLECT_BTN_CH);
     collect.whileHeld(new HerderCollect());
+
+    dispense = new JoystickButton(elevatorStick, RobotMap.HERDER_DISPENSE_BTN_CH);
     dispense.whileHeld(new HerderDispense());
 
-    // PID Controls (Using Elevator Joystick)
+   
+
+    // Manual Herder Arm Controls (Using Elevator Joystick)
     herderArmInButton = new JoystickButton(elevatorStick, RobotMap.HERDER_ARM_IN_BTN);
-    herderArmInButton.whenPressed(new TestHerderArmInCom());
+    herderArmInButton.whileHeld(new TestHerderArmInCom());
 
     herderArmOutButton = new JoystickButton(elevatorStick, RobotMap.HERDER_ARM_OUT_BTN);
-    herderArmOutButton.whenPressed(new TestHerderArmOutCom());
+    herderArmOutButton.whileHeld(new TestHerderArmOutCom());
   }
 
-  //Added an exponential curve to the drive throttle between 0 and 1
-  //Higher throttleCurve > steeper, smaller throttleCurve > shallower     -Andrew 
+  // Added option for mapping the drive axis to an exponential curve between 0 and
+  // 1
+  // by the eq: x*1/y*y^x (where x=joystick and y=scailing factor (throttleCurve))
+  // -Andrew
   public double getX() {
-    // xjoy = driveStick.getRawAxis(1);
-    // return (-xjoy*(1/throttleCurve)*Math.pow(throttleCurve, -xjoy));
-    return -driveStick.getRawAxis(1);
+    // return ((-driveStick.getRawAxis(1))*1/throttleCurve*Math.pow(throttleCurve,
+    // (-driveStick.getRawAxis(1))));
+    return (-driveStick.getRawAxis(1)) * 0.8;
   }
 
   public double getY() {
-    // yjoy = driveStick.getRawAxis(0);
-    // return (yjoy*(1/throttleCurve)*Math.pow(throttleCurve, yjoy));
-    return driveStick.getRawAxis(0);
+    // return ((driveStick.getRawAxis(0))*1/throttleCurve*Math.pow(throttleCurve,
+    // (driveStick.getRawAxis(0))));
+    return -driveStick.getRawAxis(0);
   }
 
   public double getTwist() {
-    // zjoy = driveStick.getRawAxis(2);
-    // return (zjoy*(1/throttleCurve)*Math.pow(throttleCurve, zjoy));
-    return driveStick.getRawAxis(2);
+    // return ((driveStick.getRawAxis(2))*1/throttleCurve*Math.pow(throttleCurve,
+    // (driveStick.getRawAxis(2))));
+    return (-driveStick.getRawAxis(2)) * 0.8;
   }
 
   public double getCameraTwist() {

@@ -5,13 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.HerderCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class HerderArmInCom extends Command {
-    public HerderArmInCom() {
+public class TestHerderArmOutCom extends Command {
+    public TestHerderArmOutCom() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.herderArmSub);
   }
@@ -24,23 +24,23 @@ public class HerderArmInCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-
+    
     Robot.herderArmSub.getHerderArmPot();
     Robot.herderArmSub.shuffleUpdate();
-
-    Robot.herderArmSub.setHerderArmPosition(0.5); //TODO: find a midpoint to use to test if it can hold the herder in position
+    
+    Robot.herderArmSub.armOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false; //!Robot.lifterSub.getRearBottomLimit() && !Robot.lifterSub.getFrontBottomLimit(); // limit switch code in LifterSub (so they will stop independantly)
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.herderArmSub.armStop();
   }
 
   // Called when another command which requires one or more of the same

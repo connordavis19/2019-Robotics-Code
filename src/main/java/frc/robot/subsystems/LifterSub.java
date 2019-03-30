@@ -15,180 +15,223 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.*;
+import frc.robot.commands.LifterCommands.StopLifterMotorsCom;
 
 /**
  * Add your docs here.
  */
 public class LifterSub extends Subsystem {
+  // Initialize all of the objects and values for the
+  // subsystem-----------------------------------------------------------------------
 
-  private AnalogInput frontLifterPot;
-  private AnalogInput rearLifterPot;
+  // front lifter
+  private WPI_VictorSPX frontLifterMotor;
+  private AnalogInput frontLiftPot;
+  private DigitalInput frontTopLiftLimit;
+  private DigitalInput frontBottomLiftLimit;
+  private PIDController frontLiftPID;
 
-  private PIDController frontLifterPID;
-  private PIDController rearLifterPID;
-  private double kP, kI, kD, kIz, kF, kMaxOutput, kMinOutput;
+  // rear lifter
+  private WPI_VictorSPX rearLifterMotor;
+  private AnalogInput rearLiftPot;
+  private DigitalInput rearTopLiftLimit;
+  private DigitalInput rearBottomLiftLimit;
+  private PIDController rearLiftPID;
 
-  private WPI_VictorSPX frontLifter, rearLifter, lifterDrive;
-  private DigitalInput frontLimitTop, frontLimitBottom, rearLimitTop, rearLimitBottom;
+  // lift drive motor
+  private WPI_VictorSPX liftDriveMotor;
 
+  // pid coefficients
+  private double kP, kI, kD, kMaxOutput, kMinOutput;
+
+  // The constructor for the
+  // subsystem---------------------------------------------------------------------------
   public LifterSub() {
-    // set lifter motors (see RobotMap for IDs)
-    frontLifter = new WPI_VictorSPX(RobotMap.FRONT_LIFTER_CH);
-    rearLifter = new WPI_VictorSPX(RobotMap.REAR_LIFTER_CH);
-    lifterDrive = new WPI_VictorSPX(RobotMap.LIFTER_DRIVE_CH);
 
-    // create lifter potentionmetrs
-    frontLifterPot = new AnalogInput(RobotMap.FRONT_LIFTER_POT_CH);
-    rearLifterPot = new AnalogInput(RobotMap.REAR_LIFTER_POT_CH);
+    // Instatiate the motor and encoder objects and assign values for the subsystem
+
+    // Front lifter
+    frontLifterMotor = new WPI_VictorSPX(RobotMap.FRONT_LIFT_MOTOR_CH);
+    frontLiftPot = new AnalogInput(RobotMap.FRONT_LIFT_POT_CH);
+    frontTopLiftLimit = new DigitalInput(RobotMap.FRONT_TOP_LIFT_LIMIT_CH);
+    frontBottomLiftLimit = new DigitalInput(RobotMap.FRONT_BOTTOM_LIFT_LIMIT_CH);
+
+    // Rear lifter
+    rearLifterMotor = new WPI_VictorSPX(RobotMap.REAR_LIFT_MOTOR_CH);
+    rearLiftPot = new AnalogInput(RobotMap.REAR_LIFT_POT_CH);
+    rearTopLiftLimit = new DigitalInput(RobotMap.REAR_TOP_LIFT_LIMIT_CH);
+    rearBottomLiftLimit = new DigitalInput(RobotMap.REAR_BOTTOM_LIFT_LIMIT_CH);
+
+    // Lift driver motor
+    liftDriveMotor = new WPI_VictorSPX(RobotMap.LIFT_DRIVE_MOTOR_CH);
 
     // create pidcontroller
-    frontLifterPID = new PIDController(0, 0, 0, frontLifterPot, frontLifter);
-    rearLifterPID = new PIDController(0, 0, 0, rearLifterPot, rearLifter);
+    frontLiftPID = new PIDController(0, 0, 0, frontLiftPot, frontLifterMotor);
+    rearLiftPID = new PIDController(0, 0, 0, rearLiftPot, rearLifterMotor);
 
     // create PID coefficients
     kP = 0.3;
     kI = 0;
     kD = 0;
-    kMaxOutput = 0.2;
-    kMinOutput = -0.2;
+    kMaxOutput = 0.5;
+    kMinOutput = -0.5;
 
     // set PID coefficients
     // Front Lifter PID
-    frontLifterPID.setP(kP);
-    frontLifterPID.setI(kI);
-    frontLifterPID.setD(kD);
-    frontLifterPID.setOutputRange(kMinOutput, kMaxOutput);
+    frontLiftPID.setP(kP);
+    frontLiftPID.setI(kI);
+    frontLiftPID.setD(kD);
+    frontLiftPID.setOutputRange(kMinOutput, kMaxOutput);
     // Rear Lifter PID
-    rearLifterPID.setP(kP);
-    rearLifterPID.setI(kI);
-    rearLifterPID.setD(kD);
-    rearLifterPID.setOutputRange(kMinOutput, kMaxOutput);
-
-    // send to SmartDashboard
-    SmartDashboard.putData(frontLifterPot);
-    SmartDashboard.putData(rearLifterPot);
-    SmartDashboard.putData(frontLifterPID);
-    SmartDashboard.putData(rearLifterPID);
-
-    // set lifter limits (see RobotMap for IDs)
-    frontLimitTop = new DigitalInput(RobotMap.FRONT_LIMIT_TOP_CH);
-    frontLimitBottom = new DigitalInput(RobotMap.FRONT_LIMIT_BOTTOM_CH);
-    rearLimitTop = new DigitalInput(RobotMap.REAR_LIMIT_TOP_CH);
-    rearLimitBottom = new DigitalInput(RobotMap.REAR_LIMIT_BOTTOM_CH);
-
-    SmartDashboard.putData(frontLifter);
-    SmartDashboard.putData(rearLifter);
-    SmartDashboard.putData(lifterDrive);
-    SmartDashboard.putData(frontLimitTop);
-    SmartDashboard.putData(frontLimitBottom);
-    SmartDashboard.putData(rearLimitTop);
-    SmartDashboard.putData(rearLimitBottom);
-    // SmartDashboard.putData(frontLifterPot);
-    // SmartDashboard.putData(rearLifterPot);
+    rearLiftPID.setP(kP);
+    rearLiftPID.setI(kI);
+    rearLiftPID.setD(kD);
+    rearLiftPID.setOutputRange(kMinOutput, kMaxOutput);
   }
 
-  public double getFrontLifterPot() {
-    return frontLifterPot.getVoltage();
+  // end of constructor--------------------------------------------------------
+
+  // methods for printing values to SmartDashboard-----------------------------
+
+  public void getAllLiftSensors() {
+    getFrontLiftPot();
+    getRearLiftPot();
+    getFrontLiftTopLimit();
+    getFrontLiftTopLimit();
+    getRearLiftTopLimit();
+    getRearLiftBottomLimit();
   }
+
+  public double getFrontLiftPot() {
+    SmartDashboard.putNumber("Front Lift Pot Voltage", frontLiftPot.getVoltage());
+    return frontLiftPot.getVoltage();
+  }
+
+  public double getRearLiftPot() {
+    SmartDashboard.putNumber("Rear Lift Pot Voltage", rearLiftPot.getVoltage());
+    return rearLiftPot.getVoltage();
+  }
+
+  public boolean getFrontLiftTopLimit() {
+    SmartDashboard.putBoolean("Front Top Lift Limit", frontTopLiftLimit.get());
+    return frontTopLiftLimit.get();
+  }
+
+  public boolean getFrontLiftBottomLimit() {
+    SmartDashboard.putBoolean("Front Bottom Lift Limit", frontBottomLiftLimit.get());
+    return frontBottomLiftLimit.get();
+  }
+
+  public boolean getRearLiftTopLimit() {
+    SmartDashboard.putBoolean("Rear Top Lift Limit", rearTopLiftLimit.get());
+    return rearTopLiftLimit.get();
+  }
+
+  public boolean getRearLiftBottomLimit() {
+    SmartDashboard.putBoolean("Rear Bottom Lift Limit", rearBottomLiftLimit.get());
+    return rearBottomLiftLimit.get();
+  }
+
+  // Methods for moving lifters up
+  // ------------------------------------------------------------------
+
+  // Front lifter up
+  public void frontLifterUp() {
+    double frontLiftPotValue = getFrontLiftPot();
+    boolean frontTopLimitValue = getFrontLiftTopLimit();
+
+    if (frontLiftPotValue < 3.6 && frontTopLimitValue == true) {
+      frontLifterMotor.set(-.5);
+    }
+
+    else {
+      frontLifterMotor.set(0);
+    }
+
+  }
+
+  // Rear lifter up
+  public void rearLifterUp() {
+
+    double rearLiftPotValue = getRearLiftPot();
+    boolean rearTopLimitValue = getRearLiftTopLimit();
+
+    if (rearLiftPotValue < 3.6 && rearTopLimitValue == true) {
+      rearLifterMotor.set(-.5);
+    }
+
+    else {
+      frontLifterMotor.set(0);
+    }
+
+  }
+
+  // Both lifters down--------------------------------------------------
+
+  public void bothLiftersDown() {
+    double frontLiftPotValue = getFrontLiftPot();
+    double rearLiftPotValue = getRearLiftPot();
+    boolean frontBottomLimitValue = getFrontLiftTopLimit();
+    boolean rearBottomLimitValue = getRearLiftTopLimit();
+
+    
+    //When front bottom limit is online add to this statement
+    if (frontLiftPotValue > 0.8 && rearLiftPotValue > 0.9) {
+
+      if (frontLiftPotValue < rearLiftPotValue - .075) {
+        frontLifterMotor.set(.5);
+        rearLifterMotor.set(.7);
+      }
+
+      else {
+        frontLifterMotor.set(.7);
+        rearLifterMotor.set(.5);
+      }
+
+    }
+
+    else {
+      frontLifterMotor.set(0);
+      rearLifterMotor.set(0);
+    }
+
+  }
+
+  // Method to call for default commmand to keep motors still during teleop
+  public void stopLiftMotors() {
+    frontLifterMotor.set(0);
+    rearLifterMotor.set(0);
+  }
+
+  // Lifter drive motor methods---------------------------------------------
+  public void lifterDriveForward() {
+    liftDriveMotor.set(1);
+  }
+
+  public void lifterDriveReverse() {
+
+    liftDriveMotor.set(-1);
+  }
+
+  public void lifterDriveStop() {
+    liftDriveMotor.set(0);
+  }
+
+  // PID setpoint methods ---------------------------------------------------
 
   public void setFrontLifterPID(double setPoint) {
-    frontLifterPID.setSetpoint(setPoint);
-  }
-
-  public double getRearLifterPot() {
-    return rearLifterPot.getVoltage();
+    frontLiftPID.setSetpoint(setPoint);
   }
 
   public void setRearLifterPID(double setPoint) {
-    rearLifterPID.setSetpoint(setPoint);
+    rearLiftPID.setSetpoint(setPoint);
   }
 
-  public boolean getFrontTopLimit() {
-    return frontLimitTop.get();
-  }
-
-  public boolean getFrontBottomLimit() {
-    return frontLimitBottom.get();
-  }
-
-  public boolean getRearTopLimit() {
-    return rearLimitTop.get();
-  }
-
-  public boolean getRearBottomLimit() {
-    return rearLimitBottom.get();
-  }
-
-  public void liftUp() {
-    if (getFrontTopLimit())
-      frontLifter.set(-0.52);
-    if (getRearTopLimit())
-      rearLifter.set(-0.55);
-  }
-
-  public void liftDown() {
-    if (getFrontBottomLimit())
-      frontLifter.set(0.52);
-    if (getRearBottomLimit())
-      rearLifter.set(.55);
-  }
-
-  public void frontLiftUp() {
-    frontLifter.set(-0.5);
-  }
-
-  public void frontLiftDown() {
-    frontLifter.set(0.5);
-  }
-
-  public void rearLiftUp() {
-    rearLifter.set(-0.5);
-  }
-
-  public void rearLiftDown() {
-    rearLifter.set(0.5);
-  }
-
-  public void lifterDrive(double xSpeed) {
-    lifterDrive.set(xSpeed);
-  }
-
-  public void analogLift(double rearX, double frontX) {
-    frontLifter.set(frontX);
-    rearLifter.set(rearX);
-  }
-
-  public void frontLiftStop() {
-    frontLifter.set(0);
-  }
-
-  public void rearLiftStop() {
-    rearLifter.set(0);
-  }
-
-  public void stopLifters() {
-    frontLifter.set(0);
-    rearLifter.set(0);
-  }
-
-  public void stopLifterDrive() {
-    lifterDrive.set(0);
-  }
-
-  public void stopAll() {
-    frontLifter.set(0);
-    rearLifter.set(0);
-    lifterDrive.set(0);
-  }
-
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
+  // This method sets the default command to stop motors- this causes motors to
+  // default to stop during normal robot operation
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new LifterStick());
-    //setDefaultCommand(new RearLifterSlaveAndDriveCom());
+    setDefaultCommand(new StopLifterMotorsCom());
   }
 }

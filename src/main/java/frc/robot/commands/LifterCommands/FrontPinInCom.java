@@ -5,15 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.LifterCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ElevatorStopCom extends Command {
-  public ElevatorStopCom() {
+public class FrontPinInCom extends Command {
+  public FrontPinInCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.elevatorSub);
+    // eg. requires(chassis);
+    requires(Robot.lifterPinSub);
   }
 
   // Called just before this Command runs the first time
@@ -24,7 +25,7 @@ public class ElevatorStopCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevatorSub.elevatorStop();
+    Robot.lifterPinSub.frontPinsIn();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +37,6 @@ public class ElevatorStopCom extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
   }
 
   // Called when another command which requires one or more of the same

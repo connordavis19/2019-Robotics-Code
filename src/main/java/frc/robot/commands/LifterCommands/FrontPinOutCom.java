@@ -5,15 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.LifterCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class RearLifterUpCom extends Command {
-    public RearLifterUpCom() {
+public class FrontPinOutCom extends Command {
+  public FrontPinOutCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.lifterSub);
+    // eg. requires(chassis);
+    requires(Robot.lifterPinSub);
   }
 
   // Called just before this Command runs the first time
@@ -24,19 +25,18 @@ public class RearLifterUpCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.rearLiftUp();
+    Robot.lifterPinSub.frontPinsOut();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !Robot.lifterSub.getRearTopLimit();
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lifterSub.rearLiftStop();
   }
 
   // Called when another command which requires one or more of the same

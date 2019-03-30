@@ -9,21 +9,15 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.HerderStopCollect;
+import frc.robot.commands.HerderCommands.HerderStopCollect;
 
 /**
  * Add your docs here.
  */
 public class HerderSub extends Subsystem {
-
-  private DoubleSolenoid buffaloNose;
+ 
   private WPI_VictorSPX herderCollectorTop;
   private WPI_VictorSPX herderCollectorBottom;
 
@@ -37,7 +31,7 @@ public class HerderSub extends Subsystem {
     herderCollectorBottom = new WPI_VictorSPX(RobotMap.HERDER_BOTTOM_COLLECTOR_CHANNEL);
     herderCollectorBottom.configOpenloopRamp(0);
 
-    buffaloNose = new DoubleSolenoid(RobotMap.BUFFALO_NOSE_FWD, RobotMap.BUFFALO_NOSE_BWD);
+    
 
   }
 
@@ -56,13 +50,7 @@ public class HerderSub extends Subsystem {
     herderCollectorTop.set(0);
   }
 
-  public void buffaloNoseIn() {
-    buffaloNose.set(DoubleSolenoid.Value.kForward);
-  }
-
-  public void buffaloNoseOut() {
-    buffaloNose.set(DoubleSolenoid.Value.kReverse);
-  }
+ 
 
   @Override
   public void initDefaultCommand() {

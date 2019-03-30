@@ -1,17 +1,20 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.LifterCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class LifterDriveCom extends Command {
-    public LifterDriveCom() {
+/**
+ * An example command.  You can replace me with your own command.
+ */
+public class BothLiftersDownCom extends Command {
+  public BothLiftersDownCom() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.lifterSub);
   }
@@ -24,8 +27,8 @@ public class LifterDriveCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.lifterDrive(Robot.oi.getSecondaryY());
-    Robot.lifterSub.analogLift(Robot.oi.getSecondaryLX(), Robot.oi.getSecondaryRX());
+    Robot.lifterSub.getAllLiftSensors();
+    Robot.lifterSub.bothLiftersDown();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,7 +40,7 @@ public class LifterDriveCom extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lifterSub.stopLifterDrive();
+    Robot.lifterSub.stopLiftMotors();
   }
 
   // Called when another command which requires one or more of the same

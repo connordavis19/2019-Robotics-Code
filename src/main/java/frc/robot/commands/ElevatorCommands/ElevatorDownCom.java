@@ -5,37 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.ElevatorCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class FrontLifterStopCom extends Command {
-    public FrontLifterStopCom() {
+public class ElevatorDownCom extends Command {
+  public ElevatorDownCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.lifterSub);
+    requires(Robot.elevatorSub);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.elevatorSub.elevatorDown();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.frontLiftStop();
+    Robot.elevatorSub.getElevatorLimits();
+    Robot.elevatorSub.elevatorDown();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return !Robot.elevatorSub.getBottomLimit();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.elevatorSub.elevatorStop();
   }
 
   // Called when another command which requires one or more of the same

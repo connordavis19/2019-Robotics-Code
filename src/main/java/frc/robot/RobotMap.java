@@ -15,11 +15,6 @@ package frc.robot;
  */
 public class RobotMap {
 
-  // Create constants for potentiometers
-  public static int HERDER_POT_CH = 3;
-  public static int FRONT_LIFTER_POT_CH = 0; // TODO: change ID
-  public static int REAR_LIFTER_POT_CH = 1; // TODO: change ID
-
   // Create constants for the drive motors- change the values to the motor
   // controller ID
   public static int FRONT_LEFT_CHANNEL = 3;
@@ -27,47 +22,92 @@ public class RobotMap {
   public static int REAR_RIGHT_CHANNEL = 4;
   public static int REAR_LEFT_CHANNEL = 2;
 
-  // Create constants for the elevator motor and limits
+  // Create constants for the elevator motor and limits-------------------
   public static int ELEVATOR_MOTOR_CHANNEL = 11;
   public static int UPPER_ELEVATOR_LIMIT_CHANNEL = 1;
-  public static int LOWER_ELEVATOR_LIMIT_CHANNEL = 0;
-  public static int ELEVATOR_POT_CH = 2;
+  public static int LOWER_ELEVATOR_LIMIT_CHANNEL = 3;
 
+  // Herder constants------------------------------------------------------
   // Create constants for herder motors
   public static int HERDER_BOTTOM_COLLECTOR_CHANNEL = 7; // TODO: set to 12
   public static int HERDER_TOP_COLLECTOR_CHANNEL = 8;
+
+  // Create constants for the herder arm
   public static int HERDER_ARM_MOTOR_CHANNEL = 12; // TODO: set to 8
+  public static int HERDER_POT_CH = 3;
+
+  // Buffalo nose----------------------------------------------------------
+
+  // Create constants for the buffalo nose
   public static int BUFFALO_NOSE_FWD = 2;
   public static int BUFFALO_NOSE_BWD = 3;
-
-  //Create constants for herder arm buttons on Joystick
-  public static int HERDER_ARM_IN_BTN = 2;
-  public static int HERDER_ARM_OUT_BTN = 4;
 
   // Create constants for servo PWM location
   public static int TRAVERSE_SERVO_CHANNEL = 4;
   public static int YAW_SERVO_CHANNEL = 5;
 
-  // Create constants for lifters and lifter limits
-  public static int FRONT_LIFTER_CH = 10;
-  public static int REAR_LIFTER_CH = 6;
-  public static int LIFTER_DRIVE_CH = 9;
-  public static int FRONT_LIMIT_TOP_CH = 9;
-  public static int FRONT_LIMIT_BOTTOM_CH = 2;
-  public static int REAR_LIMIT_TOP_CH = 8;
-  public static int REAR_LIMIT_BOTTOM_CH = 6;
+  // Lifter --------------------------------------------------------------
+  // Create the constants for the front lifter
+  public static int FRONT_LIFT_MOTOR_CH = 10;
+  public static int FRONT_TOP_LIFT_LIMIT_CH = 0;
+  public static int FRONT_BOTTOM_LIFT_LIMIT_CH = 2;
+  public static int FRONT_LIFT_POT_CH = 0;
+
+  // Create the constants for the rear lifter
+  public static int REAR_LIFT_MOTOR_CH = 6;
+  public static int REAR_TOP_LIFT_LIMIT_CH = 8;
+  public static int REAR_BOTTOM_LIFT_LIMIT_CH = 9;
+  public static int REAR_LIFT_POT_CH = 1;
+
+  // Create the constants for the lift drive motor
+  public static int LIFT_DRIVE_MOTOR_CH = 9;
+
 
   // Create constants for the drive solenoid channels- these should stay the same
   public static int DRIVE_SOL_FORWARD_CH = 0;
   public static int DRIVE_SOL_REVERSE_CH = 1;
 
-  // Create the constants for the driver joystick
+
+  // Create the constants for the driver joystick and buttons--------------
+
   public static int DRIVE_STICK_CH = 0;
   public static int SHIFT_BUTTON_CH = 1;
 
-  // Create the constants for the elevator joystick
+  public static int BUFFALO_NOSE_SHIFT_BTN_CH = 7;
+
+  public static int LIFTER_DRIVE_FORWARD_BUTTON_CH = 7;
+  public static int LIFTER_DRIVE_REVERSE_BUTTON_CH = 8;
+
+
+  // Create the constants for the elevator joystick and buttons -----------
+
   public static int ELEVATOR_STICK_CH = 1;
 
+  // herder arm system
+  public static int HERDER_ARM_IN_BTN = 5;
+  public static int HERDER_ARM_OUT_BTN = 3;
+
+  // elevator arm system
+  public static int ELEVATOR_UP_BTN_CH = 9;
+  public static int ELEVATOR_DOWN_BTN_CH = 10;
+
+  // herder system
+  public static int HERDER_COLLECT_BTN_CH = 1;
+  public static int HERDER_DISPENSE_BTN_CH = 2;
+
+  // lifter system
+  public static int BOTH_LIFTERS_DOWN_BUTTON_CH_1 = 6;
+  public static int BOTH_LIFTERS_DOWN_BUTTON_CH_2 = 10;
+  public static int REAR_LIFT_UP_BUTTON_CH = 12;
+  public static int FRONT_LIFT_UP_BUTTON_CH = 11;
+  public static int FRONT_LIFTER_PIN_IN_CH = 4;
+  public static int FRONT_LIFTER_PIN_OUT_CH = 5;
+  public static int REAR_LIFTER_PIN_IN_CH = 6;
+  public static int REAR_LIFTER_PIN_OUT_CH = 7;
+  public static int FRONT_LIFTER_PINS_SHIFT_BTTN_CH = 11;
+  public static int REAR_LIFTER_PINS_SHIFT_BTTN_CH = 12;
+
+
   // Create constant for deadband
-  public static double DEADBAND_CH = 0.1;
+  public static double DEADBAND_CH = 0.05;
 }

@@ -5,42 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.ElevatorCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.OI;
 
-public class HerderArmOutCom extends Command {
-    public HerderArmOutCom() {
+public class ElevatorUpCom extends Command {
+  public ElevatorUpCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.herderArmSub);
+    requires(Robot.elevatorSub);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.elevatorSub.getElevatorLimits();
+    Robot.elevatorSub.elevatorUp();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-
-    Robot.herderArmSub.getHerderArmPot();
-    Robot.herderArmSub.shuffleUpdate();
-    
-    Robot.herderArmSub.setHerderArmPosition(3); //TODO: find a midpoint to use to test if it can hold the herder in position
+    Robot.elevatorSub.elevatorUp();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false; //!Robot.lifterSub.getRearBottomLimit() && !Robot.lifterSub.getFrontBottomLimit(); // limit switch code in LifterSub (so they will stop independantly)
+    return !Robot.elevatorSub.getTopLimit();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.elevatorSub.elevatorStop();
   }
 
   // Called when another command which requires one or more of the same

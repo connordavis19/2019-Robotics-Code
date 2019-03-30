@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
+import frc.robot.commands.DriveTrainCommands.MecanumDriveCom;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,13 +25,15 @@ import frc.robot.commands.*;
  */
 public class Robot extends TimedRobot {
   public static DriveTrainSub driveTrainSub;
+  public static BuffaloNoseSub buffaloNoseSub;
   public static ElevatorSub elevatorSub;
   public static LifterSub lifterSub;
+  public static LifterPinSub lifterPinSub;
   public static HerderSub herderSub;
   public static HerderArmSub herderArmSub;
-  public static OI oi;
   public static ServoSub servoSub;
   public static CameraSub cameraSub;
+  public static OI oi;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -42,8 +45,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     driveTrainSub = new DriveTrainSub();
+    buffaloNoseSub = new BuffaloNoseSub();
     elevatorSub = new ElevatorSub();
     lifterSub = new LifterSub();
+    lifterPinSub = new LifterPinSub();
     herderSub = new HerderSub();
     herderArmSub = new HerderArmSub();
     servoSub = new ServoSub();
@@ -66,8 +71,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
-    //Robot.elevatorSub.getTopLimit();
-    //Robot.elevatorSub.getBottomLimit();
+    Robot.herderArmSub.getHerderArmPot();
+    Robot.lifterSub.getAllLiftSensors();
+    Robot.elevatorSub.getTopLimit();
+    Robot.elevatorSub.getBottomLimit();
+
+    Robot.cameraSub.getLimelight();
   }
 
   /**

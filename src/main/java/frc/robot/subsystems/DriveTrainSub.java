@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.RobotMap;
-import frc.robot.commands.ArcadeDriveCom;
-import frc.robot.commands.MecanumDriveCom;
+import frc.robot.commands.DriveTrainCommands.ArcadeDriveCom;
+
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -81,12 +81,12 @@ public class DriveTrainSub extends Subsystem {
 
   
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
-    mecDrive.driveCartesian((addDeadband(ySpeed)), (addDeadband(xSpeed)), (addDeadband(zRotation)));
+    mecDrive.driveCartesian(-(addDeadband(ySpeed)), (addDeadband(xSpeed)), -(addDeadband(zRotation)));
     driveSol.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void arcadeDrive(double xSpeed, double zRotation) {
-    arcDrive.arcadeDrive(addDeadband(-xSpeed), addDeadband(zRotation));
+    arcDrive.arcadeDrive((addDeadband(-xSpeed)), -(addDeadband(zRotation)));
     driveSol.set(DoubleSolenoid.Value.kForward);
   }
 

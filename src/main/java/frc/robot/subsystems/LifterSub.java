@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,14 +27,14 @@ public class LifterSub extends Subsystem {
 
   // front lifter
   private WPI_VictorSPX frontLifterMotor;
-  private AnalogInput frontLiftPot;
+  private Encoder frontLifterEncoder;
   private DigitalInput frontTopLiftLimit;
   private DigitalInput frontBottomLiftLimit;
   private PIDController frontLiftPID;
 
   // rear lifter
   private WPI_VictorSPX rearLifterMotor;
-  private AnalogInput rearLiftPot;
+  private Encoder rearLifterEncoder;
   private DigitalInput rearTopLiftLimit;
   private DigitalInput rearBottomLiftLimit;
   private PIDController rearLiftPID;
@@ -52,13 +53,13 @@ public class LifterSub extends Subsystem {
 
     // Front lifter
     frontLifterMotor = new WPI_VictorSPX(RobotMap.FRONT_LIFT_MOTOR_CH);
-    frontLiftPot = new AnalogInput(RobotMap.FRONT_LIFT_POT_CH);
+    frontLifterEncoder = new Encoder(RobotMap.FRONT_LIFT_ENC_CHANNELS[0], RobotMap.FRONT_LIFT_ENC_CHANNELS[1]);
     frontTopLiftLimit = new DigitalInput(RobotMap.FRONT_TOP_LIFT_LIMIT_CH);
     frontBottomLiftLimit = new DigitalInput(RobotMap.FRONT_BOTTOM_LIFT_LIMIT_CH);
 
     // Rear lifter
     rearLifterMotor = new WPI_VictorSPX(RobotMap.REAR_LIFT_MOTOR_CH);
-    rearLiftPot = new AnalogInput(RobotMap.REAR_LIFT_POT_CH);
+    rearLifterEncoder = new Encoder(RobotMap.REAR_LIFT_ENC_CHANNELS[0], RobotMap.REAR_LIFT_ENC_CHANNELS[1]);
     rearTopLiftLimit = new DigitalInput(RobotMap.REAR_TOP_LIFT_LIMIT_CH);
     rearBottomLiftLimit = new DigitalInput(RobotMap.REAR_BOTTOM_LIFT_LIMIT_CH);
 
@@ -66,11 +67,11 @@ public class LifterSub extends Subsystem {
     liftDriveMotor = new WPI_VictorSPX(RobotMap.LIFT_DRIVE_MOTOR_CH);
 
     // create pidcontroller
-    frontLiftPID = new PIDController(0, 0, 0, frontLiftPot, frontLifterMotor);
-    rearLiftPID = new PIDController(0, 0, 0, rearLiftPot, rearLifterMotor);
+    frontLiftPID = new PIDController(0, 0, 0, frontLifterEncoder, frontLifterMotor);
+    rearLiftPID = new PIDController(0, 0, 0, rearLifterEncoder, rearLifterMotor);
 
     // create PID coefficients
-    kP = 0.3;
+    kP = 0.01;
     kI = 0;
     kD = 0;
     kMaxOutput = 0.5;
@@ -94,22 +95,22 @@ public class LifterSub extends Subsystem {
   // methods for printing values to SmartDashboard-----------------------------
 
   public void getAllLiftSensors() {
-    getFrontLiftPot();
-    getRearLiftPot();
+    getfrontLifterEncoder();
+    getRearLiftEncoder();
     getFrontLiftTopLimit();
     getFrontLiftTopLimit();
     getRearLiftTopLimit();
     getRearLiftBottomLimit();
   }
 
-  public double getFrontLiftPot() {
-    SmartDashboard.putNumber("Front Lift Pot Voltage", frontLiftPot.getVoltage());
-    return frontLiftPot.getVoltage();
+  public double getfrontLifterEncoder() {
+    SmartDashboard.putNumber("Front Lift Encoder Voltage", frontLifterEncoder.getDistance());
+    return frontLifterEncoder.getDistance();
   }
 
-  public double getRearLiftPot() {
-    SmartDashboard.putNumber("Rear Lift Pot Voltage", rearLiftPot.getVoltage());
-    return rearLiftPot.getVoltage();
+  public double getRearLiftEncoder() {
+    SmartDashboard.putNumber("Rear Lift Encoder Voltage", rearLifterEncoder.getDistance());
+    return rearLifterEncoder.getDistance();
   }
 
   public boolean getFrontLiftTopLimit() {
@@ -137,10 +138,10 @@ public class LifterSub extends Subsystem {
 
   // Front lifter up
   public void frontLifterUp() {
-    double frontLiftPotValue = getFrontLiftPot();
+    double frontLifterEncoderValue = getfrontLifterEncoder();
     boolean frontTopLimitValue = getFrontLiftTopLimit();
 
-    if (frontLiftPotValue < 3.6 && frontTopLimitValue == true) {
+    if (frontLifterEncoderValue < 3.6 && frontTopLimitValue == true) {
       frontLifterMotor.set(-.5);
     }
 
@@ -153,10 +154,10 @@ public class LifterSub extends Subsystem {
   // Rear lifter up
   public void rearLifterUp() {
 
-    double rearLiftPotValue = getRearLiftPot();
+    double rearLiftEncoderValue = getRearLiftEncoder();
     boolean rearTopLimitValue = getRearLiftTopLimit();
 
-    if (rearLiftPotValue < 3.6 && rearTopLimitValue == true) {
+    if (rearLiftEncoderValue < 3.6 && rearTopLimitValue == true) {
       rearLifterMotor.set(-.5);
     }
 
@@ -169,16 +170,16 @@ public class LifterSub extends Subsystem {
   // Both lifters down--------------------------------------------------
 
   public void bothLiftersDown() {
-    double frontLiftPotValue = getFrontLiftPot();
-    double rearLiftPotValue = getRearLiftPot();
+    double frontLifterEncoderValue = getfrontLifterEncoder();
+    double rearLiftEncoderValue = getRearLiftEncoder();
     boolean frontBottomLimitValue = getFrontLiftTopLimit();
     boolean rearBottomLimitValue = getRearLiftTopLimit();
 
     
     //When front bottom limit is online add to this statement
-    if (frontLiftPotValue > 0.8 && rearLiftPotValue > 0.9) {
+    if (frontLifterEncoderValue > 0.8 && rearLiftEncoderValue > 0.9) {
 
-      if (frontLiftPotValue < rearLiftPotValue - .075) {
+      if (frontLifterEncoderValue < rearLiftEncoderValue - .075) {
         frontLifterMotor.set(.5);
         rearLifterMotor.set(.7);
       }

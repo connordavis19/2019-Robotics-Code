@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCom;
+import frc.robot.commands.DriveTrainCommands.MecanumDriveCom;
 
 
 /**
@@ -32,12 +33,12 @@ public class DriveTrainSub extends Subsystem {
   private SpeedControllerGroup leftSide;
   private SpeedControllerGroup rightSide;
   private DoubleSolenoid driveSol;
-  private CANEncoder frontLeftEncoder;
-  private CANEncoder frontRightEncoder;
-  private CANEncoder backLeftEncoder;
-  private CANEncoder backRightEncoder;
-  private CANEncoder dummyEncoder;
-  private CANEncoder[] encoders = new CANEncoder[4];
+  //private CANEncoder frontLeftEncoder;
+  //private CANEncoder frontRightEncoder;
+  //private CANEncoder backLeftEncoder;
+  //private CANEncoder backRightEncoder;
+  //private CANEncoder dummyEncoder;
+  //private CANEncoder[] encoders = new CANEncoder[4];
   private double deadband;
 
   public DriveTrainSub() {
@@ -46,10 +47,17 @@ public class DriveTrainSub extends Subsystem {
     rearLeft = new CANSparkMax(RobotMap.REAR_LEFT_CHANNEL, MotorType.kBrushless);
     rearRight = new CANSparkMax(RobotMap.REAR_RIGHT_CHANNEL, MotorType.kBrushless);
 
-    encoders[0] = frontLeftEncoder;
-    encoders[1] = frontRightEncoder;
-    encoders[2] = backLeftEncoder;
-    encoders[3] = backRightEncoder;
+    //frontLeft.setSmartCurrentLimit(40);
+    //frontRight.setSmartCurrentLimit(40);
+    //rearLeft.setSmartCurrentLimit(40);
+    //rearRight.setSmartCurrentLimit(40);
+    
+
+
+    //encoders[0] = frontLeftEncoder;
+    //encoders[1] = frontRightEncoder;
+    //encoders[2] = backLeftEncoder;
+    //encoders[3] = backRightEncoder;
 
     mecDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
@@ -57,20 +65,23 @@ public class DriveTrainSub extends Subsystem {
     rightSide = new SpeedControllerGroup(frontRight, rearRight);
     arcDrive = new DifferentialDrive(leftSide, rightSide);
 
-    frontLeft.setOpenLoopRampRate(.5);
-    frontRight.setOpenLoopRampRate(.5);
-    rearLeft.setOpenLoopRampRate(.5);
-    rearRight.setOpenLoopRampRate(.5);
+    
+    frontLeft.setOpenLoopRampRate(0);
+    frontRight.setOpenLoopRampRate(0);
+    rearLeft.setOpenLoopRampRate(0);
+    rearRight.setOpenLoopRampRate(0);
 
     frontLeft.setIdleMode(IdleMode.kCoast);
     frontRight.setIdleMode(IdleMode.kCoast);
     rearLeft.setIdleMode(IdleMode.kCoast);
     rearRight.setIdleMode(IdleMode.kCoast);
-
+    
     deadband = RobotMap.DEADBAND_CH;
 
     driveSol = new DoubleSolenoid(RobotMap.DRIVE_SOL_FORWARD_CH, RobotMap.DRIVE_SOL_REVERSE_CH);
   }
+
+  /** 
 
   public CANEncoder getEncoders() {
     for(int i = 0; i < encoders.length; i++) {
@@ -78,16 +89,16 @@ public class DriveTrainSub extends Subsystem {
     }
     return dummyEncoder;
   }
-
+  */
   
   public void mecanumDrive(double ySpeed, double xSpeed, double zRotation) {
     mecDrive.driveCartesian(-(addDeadband(ySpeed)), (addDeadband(xSpeed)), -(addDeadband(zRotation)));
-    driveSol.set(DoubleSolenoid.Value.kReverse);
+    driveSol.set(DoubleSolenoid.Value.kForward);
   }
 
   public void arcadeDrive(double xSpeed, double zRotation) {
     arcDrive.arcadeDrive((addDeadband(-xSpeed)), -(addDeadband(zRotation)));
-    driveSol.set(DoubleSolenoid.Value.kForward);
+    driveSol.set(DoubleSolenoid.Value.kReverse);
   }
 
   // Adds deadband to a given axis (for driving only)
@@ -102,6 +113,6 @@ public class DriveTrainSub extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ArcadeDriveCom());
+    setDefaultCommand(new MecanumDriveCom());
   }
 }

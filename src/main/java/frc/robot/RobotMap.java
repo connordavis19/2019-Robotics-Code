@@ -17,25 +17,25 @@ public class RobotMap {
 
   // Create constants for the drive motors- change the values to the motor
   // controller ID
-  public static int FRONT_LEFT_CHANNEL = 3;
-  public static int FRONT_RIGHT_CHANNEL = 5;
-  public static int REAR_RIGHT_CHANNEL = 4;
-  public static int REAR_LEFT_CHANNEL = 2;
+  public static int FRONT_LEFT_CHANNEL = 2;
+  public static int FRONT_RIGHT_CHANNEL = 4;
+  public static int REAR_RIGHT_CHANNEL = 3;
+  public static int REAR_LEFT_CHANNEL = 12;
 
   // Create constants for the elevator motor and limits-------------------
-  public static int ELEVATOR_MOTOR_CHANNEL = 11;
+  public static int ELEVATOR_MOTOR_CHANNEL = 9;
   public static int UPPER_ELEVATOR_LIMIT_CHANNEL = 1;
   public static int LOWER_ELEVATOR_LIMIT_CHANNEL = 3;
 
   // Herder constants------------------------------------------------------
   // Create constants for herder motors
-  public static int HERDER_BOTTOM_COLLECTOR_CHANNEL = 7; // TODO: set to 12
+  public static int HERDER_BOTTOM_COLLECTOR_CHANNEL = 7;
   public static int HERDER_TOP_COLLECTOR_CHANNEL = 8;
 
   // Create constants for the herder arm
-  public static int HERDER_ARM_MOTOR_CHANNEL = 12; // TODO: set to 8
+  public static int HERDER_ARM_MOTOR_CHANNEL = 10;
   public static int HERDER_POT_CH = 3;
-
+    
   // Buffalo nose----------------------------------------------------------
 
   // Create constants for the buffalo nose
@@ -48,7 +48,7 @@ public class RobotMap {
 
   // Lifter --------------------------------------------------------------
   // Create the constants for the front lifter
-  public static int FRONT_LIFT_MOTOR_CH = 10;
+  public static int FRONT_LIFT_MOTOR_CH = 11;
   public static int FRONT_TOP_LIFT_LIMIT_CH = 0;
   public static int FRONT_BOTTOM_LIFT_LIMIT_CH = 2;
   public static int FRONT_LIFT_POT_CH = 0;
@@ -75,7 +75,7 @@ public class RobotMap {
 
   public static int BUFFALO_NOSE_SHIFT_BTN_CH = 7;
 
-  public static int LIFTER_DRIVE_FORWARD_BUTTON_CH = 7;
+  public static int LIFTER_DRIVE_FORWARD_BUTTON_CH = 6;
   public static int LIFTER_DRIVE_REVERSE_BUTTON_CH = 8;
 
 
@@ -98,16 +98,21 @@ public class RobotMap {
   // lifter system
   public static int BOTH_LIFTERS_DOWN_BUTTON_CH_1 = 6;
   public static int BOTH_LIFTERS_DOWN_BUTTON_CH_2 = 10;
-  public static int REAR_LIFT_UP_BUTTON_CH = 12;
-  public static int FRONT_LIFT_UP_BUTTON_CH = 11;
+
+  public static int REAR_LIFT_UP_BUTTON_CH = 10;
+  public static int FRONT_LIFT_UP_BUTTON_CH = 9;
+
   public static int FRONT_LIFTER_PIN_IN_CH = 4;
   public static int FRONT_LIFTER_PIN_OUT_CH = 5;
+
   public static int REAR_LIFTER_PIN_IN_CH = 4;
   public static int REAR_LIFTER_PIN_OUT_CH = 5;
-  // public static int FRONT_LIFTER_PINS_SHIFT_BTTN_CH = 12;
-  public static int REAR_LIFTER_PINS_SHIFT_BTTN_CH = 11;
+
+  public static int FRONT_LIFTER_PINS_SHIFT_BTTN_CH = 6;
+  
+  public static int REAR_LIFTER_PINS_SHIFT_BTTN_CH = 4; // (currently on DriveStick)
 
 
   // Create constant for deadband
-  public static double DEADBAND_CH = 0.05;
+  public static double DEADBAND_CH = 0.09;
 }

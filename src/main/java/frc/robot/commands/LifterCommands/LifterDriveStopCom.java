@@ -13,10 +13,10 @@ import frc.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class BothLiftersDownCom extends Command {
-  public BothLiftersDownCom() {
+public class LifterDriveStopCom extends Command {
+  public LifterDriveStopCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.lifterSub);
+    requires(Robot.lifterDriveSub);
   }
 
   // Called just before this Command runs the first time
@@ -27,8 +27,7 @@ public class BothLiftersDownCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterPinSub.rearPinsOut();
-    Robot.lifterSub.bothLiftersDown();
+    Robot.lifterDriveSub.lifterDriveStop();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +39,7 @@ public class BothLiftersDownCom extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lifterSub.stopLiftMotors();
+    Robot.lifterDriveSub.lifterDriveStop();
   }
 
   // Called when another command which requires one or more of the same

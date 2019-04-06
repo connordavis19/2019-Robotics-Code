@@ -26,8 +26,7 @@ public class HerderArmInCom extends Command {
   protected void execute() {
 
 
-    Robot.herderArmSub.getHerderArmPot();
-    Robot.herderArmSub.shuffleUpdate();
+
 
     Robot.herderArmSub.setHerderArmPosition(1.5); //TODO: find a midpoint to use to test if it can hold the herder in position
   }

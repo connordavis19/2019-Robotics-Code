@@ -27,7 +27,6 @@ public class FrontLifterUpCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.getAllLiftSensors();
     Robot.lifterSub.frontLifterUp();
     // sets the rear lifter PID setpoint to the voltage of the front lifter's potentiometer
     // Robot.lifterSub.setRearLifterPID(Robot.lifterSub.getFrontLiftPot());

@@ -34,11 +34,11 @@ public class LifterPinSub extends Subsystem {
   }
 
   public void rearPinsIn() {
-    rearPins.set(DoubleSolenoid.Value.kForward);
+    rearPins.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void rearPinsOut() {
-    rearPins.set(DoubleSolenoid.Value.kReverse);
+    rearPins.set(DoubleSolenoid.Value.kForward);
   }
 
   @Override

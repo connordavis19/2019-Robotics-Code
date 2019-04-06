@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
   public static BuffaloNoseSub buffaloNoseSub;
   public static ElevatorSub elevatorSub;
   public static LifterSub lifterSub;
+  public static LifterDriveSub lifterDriveSub;
   public static LifterPinSub lifterPinSub;
   public static HerderSub herderSub;
   public static HerderArmSub herderArmSub;
@@ -48,6 +50,7 @@ public class Robot extends TimedRobot {
     buffaloNoseSub = new BuffaloNoseSub();
     elevatorSub = new ElevatorSub();
     lifterSub = new LifterSub();
+    lifterDriveSub = new LifterDriveSub();
     lifterPinSub = new LifterPinSub();
     herderSub = new HerderSub();
     herderArmSub = new HerderArmSub();
@@ -75,8 +78,8 @@ public class Robot extends TimedRobot {
     Robot.lifterSub.getAllLiftSensors();
     Robot.elevatorSub.getTopLimit();
     Robot.elevatorSub.getBottomLimit();
-
     Robot.cameraSub.getLimelight();
+    //Timer.delay(0.1); //limit update to every 100ms
   }
 
   /**

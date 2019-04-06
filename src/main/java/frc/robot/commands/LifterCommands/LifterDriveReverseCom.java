@@ -16,7 +16,7 @@ import frc.robot.Robot;
 public class LifterDriveReverseCom extends Command {
   public LifterDriveReverseCom() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.lifterSub);
+    requires(Robot.lifterDriveSub);
   }
 
   // Called just before this Command runs the first time
@@ -27,8 +27,7 @@ public class LifterDriveReverseCom extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.lifterSub.getAllLiftSensors();
-    Robot.lifterSub.lifterDriveReverse();
+    Robot.lifterDriveSub.lifterDriveReverse();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +39,7 @@ public class LifterDriveReverseCom extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.lifterSub.lifterDriveStop();
+    Robot.lifterDriveSub.lifterDriveStop();
   }
 
   // Called when another command which requires one or more of the same

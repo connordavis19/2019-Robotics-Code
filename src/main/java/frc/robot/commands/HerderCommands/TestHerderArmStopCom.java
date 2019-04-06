@@ -25,8 +25,7 @@ public class TestHerderArmStopCom extends Command {
   @Override
   protected void execute() {
 
-    Robot.herderArmSub.getHerderArmPot();
-    Robot.herderArmSub.shuffleUpdate();
+  
     Robot.herderArmSub.armStop();
   }
 

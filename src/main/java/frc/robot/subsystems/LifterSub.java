@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.LifterCommands.StopLifterMotorsCom;
 
@@ -38,9 +39,6 @@ public class LifterSub extends Subsystem {
   private DigitalInput rearBottomLiftLimit;
   private PIDController rearLiftPID;
 
-  // lift drive motor
-  private WPI_VictorSPX liftDriveMotor;
-
   // pid coefficients
   private double kP, kI, kD, kMaxOutput, kMinOutput;
 
@@ -61,9 +59,6 @@ public class LifterSub extends Subsystem {
     rearLiftPot = new AnalogInput(RobotMap.REAR_LIFT_POT_CH);
     rearTopLiftLimit = new DigitalInput(RobotMap.REAR_TOP_LIFT_LIMIT_CH);
     rearBottomLiftLimit = new DigitalInput(RobotMap.REAR_BOTTOM_LIFT_LIMIT_CH);
-
-    // Lift driver motor
-    liftDriveMotor = new WPI_VictorSPX(RobotMap.LIFT_DRIVE_MOTOR_CH);
 
     // create pidcontroller
     frontLiftPID = new PIDController(0, 0, 0, frontLiftPot, frontLifterMotor);
@@ -140,7 +135,7 @@ public class LifterSub extends Subsystem {
     double frontLiftPotValue = getFrontLiftPot();
     boolean frontTopLimitValue = getFrontLiftTopLimit();
 
-    if (frontLiftPotValue < 3.6 && frontTopLimitValue == true) {
+    if (frontLiftPotValue < 2.98) {
       frontLifterMotor.set(-.5);
     }
 
@@ -156,12 +151,12 @@ public class LifterSub extends Subsystem {
     double rearLiftPotValue = getRearLiftPot();
     boolean rearTopLimitValue = getRearLiftTopLimit();
 
-    if (rearLiftPotValue < 3.6 && rearTopLimitValue == true) {
+    if (rearLiftPotValue < 2.98) {
       rearLifterMotor.set(-.5);
     }
 
     else {
-      frontLifterMotor.set(0);
+      rearLifterMotor.set(0);
     }
 
   }
@@ -174,47 +169,55 @@ public class LifterSub extends Subsystem {
     boolean frontBottomLimitValue = getFrontLiftTopLimit();
     boolean rearBottomLimitValue = getRearLiftTopLimit();
 
-    
-    //When front bottom limit is online add to this statement
-    if (frontLiftPotValue > 0.8 && rearLiftPotValue > 0.9) {
+    // When front bottom limit is online add to this statement
+    // if (frontLiftPotValue > 0.8 && rearLiftPotValue > 0.9) {
 
-      if (frontLiftPotValue < rearLiftPotValue - .075) {
-        frontLifterMotor.set(.5);
-        rearLifterMotor.set(.7);
-      }
+    //   if (frontLiftPotValue < rearLiftPotValue) {
+    //     frontLifterMotor.set(.5);
+    //     rearLifterMotor.set(.7);
+    //   }
 
-      else {
-        frontLifterMotor.set(.7);
-        rearLifterMotor.set(.5);
-      }
+    //   else {
+    //     frontLifterMotor.set(.7);
+    //     rearLifterMotor.set(.5);
+    //   }
 
+    // }
+
+    if (frontLiftPotValue > 0.8) {
+      frontLifterMotor.set(.5);
+    } else {
+      frontLifterMotor.set(0);
+      Robot.lifterDriveSub.lifterDriveForward(); // Added drive forward after front lifter gets to the top. -Andrew
     }
 
-    else {
+    if (rearLiftPotValue > 0.8) {
+      if (frontLiftPotValue < rearLiftPotValue) {
+        frontLifterMotor.set(.3);
+      } else {
+        frontLifterMotor.set(.6);
+      }
+    } else {
       frontLifterMotor.set(0);
+      Robot.lifterDriveSub.lifterDriveForward(); // Added drive forward after front lifter gets to the top. -Andrew
+    }
+
+    if (rearLiftPotValue > 0.9) {
+      if (frontLiftPotValue < rearLiftPotValue) {
+        rearLifterMotor.set(-1);
+      } else {
+        rearLifterMotor.set(-0.6);
+      }
+    } else {
       rearLifterMotor.set(0);
     }
-
   }
 
   // Method to call for default commmand to keep motors still during teleop
   public void stopLiftMotors() {
+    Robot.lifterPinSub.rearPinsIn();
     frontLifterMotor.set(0);
     rearLifterMotor.set(0);
-  }
-
-  // Lifter drive motor methods---------------------------------------------
-  public void lifterDriveForward() {
-    liftDriveMotor.set(1);
-  }
-
-  public void lifterDriveReverse() {
-
-    liftDriveMotor.set(-1);
-  }
-
-  public void lifterDriveStop() {
-    liftDriveMotor.set(0);
   }
 
   // PID setpoint methods ---------------------------------------------------

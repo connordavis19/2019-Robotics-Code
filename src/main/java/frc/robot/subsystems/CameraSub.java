@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CameraSub extends Subsystem {
 
   private UsbCamera myCam;
+  
 
   // public CameraSub() {
   //   myCam = new UsbCamera("myCamera1", 0);
@@ -28,6 +29,9 @@ public class CameraSub extends Subsystem {
   public void getLimelight()
   {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
+
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");

@@ -60,6 +60,7 @@ public class DriveTrainSub extends Subsystem {
     //encoders[3] = backRightEncoder;
 
     mecDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+    mecDrive.setSafetyEnabled(false);
 
     leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
     rightSide = new SpeedControllerGroup(frontRight, rearRight);

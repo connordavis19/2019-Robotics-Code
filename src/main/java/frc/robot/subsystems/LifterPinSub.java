@@ -44,6 +44,6 @@ public class LifterPinSub extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new RearPinInCom());
+    // setDefaultCommand(new RearPinOutCom());
   }
 }

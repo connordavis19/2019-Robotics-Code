@@ -60,7 +60,7 @@ public class RobotMap {
   public static int REAR_LIFT_POT_CH = 1;
 
   // Create the constants for the lift drive motor
-  public static int LIFT_DRIVE_MOTOR_CH = 9;
+  public static int LIFT_DRIVE_MOTOR_CH = 5;
 
 
   // Create constants for the drive solenoid channels- these should stay the same

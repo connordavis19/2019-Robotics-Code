@@ -135,7 +135,7 @@ public class LifterSub extends Subsystem {
     double frontLiftPotValue = getFrontLiftPot();
     boolean frontTopLimitValue = getFrontLiftTopLimit();
 
-    if (frontLiftPotValue < 2.98) {
+    if (frontLiftPotValue < 2.88) {
       frontLifterMotor.set(-.5);
     }
 
@@ -147,12 +147,12 @@ public class LifterSub extends Subsystem {
 
   // Rear lifter up
   public void rearLifterUp() {
-
+    Robot.lifterPinSub.rearPinsOut();
     double rearLiftPotValue = getRearLiftPot();
     boolean rearTopLimitValue = getRearLiftTopLimit();
 
     if (rearLiftPotValue < 2.98) {
-      rearLifterMotor.set(-.5);
+      rearLifterMotor.set(.5);
     }
 
     else {
@@ -184,38 +184,40 @@ public class LifterSub extends Subsystem {
 
     // }
 
-    if (frontLiftPotValue > 0.8) {
+    if (frontLiftPotValue > 0.2) {
       frontLifterMotor.set(.5);
     } else {
       frontLifterMotor.set(0);
       Robot.lifterDriveSub.lifterDriveForward(); // Added drive forward after front lifter gets to the top. -Andrew
     }
 
-    if (rearLiftPotValue > 0.8) {
-      if (frontLiftPotValue < rearLiftPotValue) {
-        frontLifterMotor.set(.3);
-      } else {
-        frontLifterMotor.set(.6);
-      }
-    } else {
-      frontLifterMotor.set(0);
-      Robot.lifterDriveSub.lifterDriveForward(); // Added drive forward after front lifter gets to the top. -Andrew
-    }
+    // if (frontLiftPotValue > 0.2) {
+    //   if (frontLiftPotValue < rearLiftPotValue) {
+    //     frontLifterMotor.set(.3);
+    //   } else {
+    //     frontLifterMotor.set(.6);
+    //   }
+    // } else {
+    //   frontLifterMotor.set(0);
+    //   Robot.lifterDriveSub.lifterDriveForward(); // Added drive forward after front lifter gets to the top. -Andrew
+    // }
 
-    if (rearLiftPotValue > 0.9) {
+    if (rearLiftPotValue > 0.2) {
+      Robot.lifterPinSub.rearPinsOut();
       if (frontLiftPotValue < rearLiftPotValue) {
-        rearLifterMotor.set(-1);
-      } else {
         rearLifterMotor.set(-0.6);
+      } else {
+        rearLifterMotor.set(-0.4);
       }
     } else {
       rearLifterMotor.set(0);
+      Robot.lifterPinSub.rearPinsIn();
     }
   }
 
   // Method to call for default commmand to keep motors still during teleop
   public void stopLiftMotors() {
-    Robot.lifterPinSub.rearPinsIn();
+    // Robot.lifterPinSub.rearPinsIn();
     frontLifterMotor.set(0);
     rearLifterMotor.set(0);
   }
